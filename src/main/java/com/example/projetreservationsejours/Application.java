@@ -1,6 +1,7 @@
 package com.example.projetreservationsejours;
 
 import com.example.projetreservationsejours.controlleur.FenetreControlleur;
+import com.example.projetreservationsejours.modele.Data;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -20,6 +21,11 @@ public class Application extends javafx.application.Application {
         //Injecte la vue dans le controlleur de fenetre
         fenetreControlleur.setStagePrincipale(stage);
         fenetreControlleur.setScenePrincipale(scene);
+
+        Data data = new Data();
+        data.loadData("database.csv");
+        //data.loadData("D:\\CoursAmphi\\MASTER\\S2\\Prototypage\\projet-reservation-sejours\\src\\main\\resources\\com\\example\\projetreservationsejours\\ressources\\database.csv");
+        data.displayDataList();
     }
 
     public static void main(String[] args) {
