@@ -24,7 +24,6 @@ public class Application extends javafx.application.Application {
 
         Data data = new Data();
         data.loadData("database.csv");
-        //data.loadData("D:\\CoursAmphi\\MASTER\\S2\\Prototypage\\projet-reservation-sejours\\src\\main\\resources\\com\\example\\projetreservationsejours\\ressources\\database.csv");
         data.displayDataList();
     }
 
