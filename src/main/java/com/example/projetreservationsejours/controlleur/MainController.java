@@ -21,10 +21,6 @@ public class MainController implements Initializable {
 
     @FXML
     void changerDeFenetre(ActionEvent event) throws IOException {
-        application.fenetreControlleur.changerDeFenetre("Accueil.fxml");
+        application.fenetreControlleur.changerDeFenetre("PageInscription.fxml");
     }
-     /*@FXML
-    void afficherRegles(ActionEvent event) throws IOException {
-        application.fenetreControlleur.afficherFenetre("Regles.fxml");
-    }*/
 }
