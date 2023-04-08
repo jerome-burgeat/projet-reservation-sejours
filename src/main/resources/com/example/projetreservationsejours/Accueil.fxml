@@ -55,6 +55,7 @@
                                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                             </padding>
                            <children>
+                              <VBox fx:id="cardContainer" />
                               <Button mnemonicParsing="false" onAction="#changerDeFenetre" text="Button" />
                            </children>
                         

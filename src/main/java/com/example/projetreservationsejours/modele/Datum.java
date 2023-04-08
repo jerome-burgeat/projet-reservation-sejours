@@ -11,6 +11,7 @@ public class Datum {
     private String title;
     private int numberOfPeople;
     private String host;
+    private String urlPhoto;
 
     // getters and setters omitted for brevity
 
@@ -25,6 +26,7 @@ public class Datum {
         datum.setTitle(tokens[4]);
         datum.setNumberOfPeople(Integer.parseInt(tokens[5]));
         datum.setHost(tokens[6]);
+        datum.setUrlPhoto(tokens[7]);
         return datum;
     }
 
@@ -84,16 +86,21 @@ public class Datum {
         this.host = host;
     }
 
+    public String getUrlPhoto() { return urlPhoto; }
+
+    public void setUrlPhoto(String urlPhoto) { this.urlPhoto = urlPhoto;}
+
     @Override
     public String toString() {
         return "Location {" +
                 "startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", price=" + price +
-                ", location='" + location + '\'' +
-                ", title='" + title + '\'' +
+                ", location='" + location +
+                ", title='" + title +
                 ", numberOfPeople=" + numberOfPeople +
-                ", host='" + host + '\'' +
+                ", host='" + host +
+                ", urlPhoto='" + urlPhoto +
                 '}';
     }
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane prefHeight="251.0" prefWidth="271.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projetreservationsejours.controlleur.CardTemplateControlleur">
+   <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" layoutX="47.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../images/default-image.png" />
+      </image>
+   </ImageView>
+   <Pane layoutX="26.0" layoutY="144.0" prefHeight="46.0" prefWidth="212.0">
+      <children>
+            <Label fx:id="titre" prefHeight="17.0" prefWidth="212.0" text="Title:" />
+            <Label fx:id="prix" layoutX="87.0" layoutY="24.0" prefWidth="125.0" text="Prix" />
+      </children>
+   </Pane>
+
+</AnchorPane>
