@@ -20,7 +20,9 @@ public class FenetreControlleur {
     }
 
     public void setStagePrincipale(Stage stagePrincipale) {
+
         this.stagePrincipale = stagePrincipale;
+        this.stagePrincipale.centerOnScreen();
     }
 
     public void setScenePrincipale(Scene scenePrincipale) {
@@ -30,6 +32,7 @@ public class FenetreControlleur {
     public void changerDeFenetre(String nomFenetre) throws IOException {
         Parent root = new FXMLLoader(getClass().getResource(nomFenetre)).load();
         Scene scene = new Scene(root);
+        this.getStagePrincipale().centerOnScreen();
         this.getStagePrincipale().setScene(scene);
     }
 
@@ -38,6 +41,7 @@ public class FenetreControlleur {
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
+        stage.centerOnScreen();
         stage.show();
     }
 
