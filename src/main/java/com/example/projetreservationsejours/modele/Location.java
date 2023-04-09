@@ -3,7 +3,8 @@ package com.example.projetreservationsejours.modele;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Datum {
+public class Location {
+    private int id;
     private LocalDate startDate;
     private LocalDate endDate;
     private double price;
@@ -15,20 +16,25 @@ public class Datum {
 
     // getters and setters omitted for brevity
 
-    public static Datum fromCsv(String csvLine) {
+    public static Location fromCsv(String csvLine) {
         String[] tokens = csvLine.split(";");
-        Datum datum = new Datum();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-        datum.setStartDate(LocalDate.parse(tokens[0], formatter));
-        datum.setEndDate(LocalDate.parse(tokens[1], formatter));
-        datum.setPrice(Double.parseDouble(tokens[2]));
-        datum.setLocation(tokens[3]);
-        datum.setTitle(tokens[4]);
-        datum.setNumberOfPeople(Integer.parseInt(tokens[5]));
-        datum.setHost(tokens[6]);
-        datum.setUrlPhoto(tokens[7]);
-        return datum;
+        Location location = new Location();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        location.setId(Integer.parseInt(tokens[0]));
+        location.setStartDate(LocalDate.parse(tokens[1], formatter));
+        location.setEndDate(LocalDate.parse(tokens[2], formatter));
+        location.setPrice(Double.parseDouble(tokens[3]));
+        location.setLocation(tokens[4]);
+        location.setTitle(tokens[5]);
+        location.setNumberOfPeople(Integer.parseInt(tokens[6]));
+        location.setHost(tokens[7]);
+        location.setUrlPhoto(tokens[8]);
+        return location;
     }
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
 
     public LocalDate getStartDate() {
         return startDate;

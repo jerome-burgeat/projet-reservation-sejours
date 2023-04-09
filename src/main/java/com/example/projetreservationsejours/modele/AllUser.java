@@ -1,7 +1,6 @@
 package com.example.projetreservationsejours.modele;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -9,12 +8,11 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Data {
-    private List<Datum> dataList;
+public class AllUser {
 
-    public Data() {
-        dataList = new ArrayList<>();
-    }
+    private List<User> users;
+
+    public AllUser() { this.users = new ArrayList<>(); }
 
     public void loadData(String filename) throws IOException {
         String pathRessources = "\\src\\main\\resources\\com\\example\\projetreservationsejours\\ressources\\";
@@ -22,21 +20,23 @@ public class Data {
         try (BufferedReader reader = new BufferedReader(new FileReader(path.toRealPath().toFile()))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                Datum datum = Datum.fromCsv(line);
-                dataList.add(datum);
+                User user = User.fromCsv(line);
+                user.toString();
+                users.add(user);
             }
         }
     }
 
-    public List<Datum> getDataList() {
-        return dataList;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void displayDataList() {
-        System.out.println("Informations {");
-        for (int i = 0; i < this.dataList.size() ; i++) {
-            System.out.println("    " + this.dataList.get(i).toString());
+    public void displayUsers() {
+        System.out.println("User infos {");
+        for (int i = 0; i < this.users.size() ; i++) {
+            System.out.println("    " + this.users.get(i).toString());
         }
         System.out.println("}");
     }
+
 }
