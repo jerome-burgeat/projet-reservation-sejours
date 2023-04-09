@@ -153,7 +153,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <Text fx:id="note1" layoutX="528.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Commentaire" wrappingWidth="111.6171875">
+                                    <Text layoutX="528.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Commentaire" wrappingWidth="111.6171875">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
