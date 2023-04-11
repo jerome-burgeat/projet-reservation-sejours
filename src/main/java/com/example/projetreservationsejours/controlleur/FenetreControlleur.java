@@ -36,12 +36,13 @@ public class FenetreControlleur {
         this.getStagePrincipale().setScene(scene);
     }
 
-    public void popupFenetre(String nomFenetre) throws IOException {
+    public void popupFenetre(String nomFenetre,String titreFenetre) throws IOException {
         Parent root = new FXMLLoader(getClass().getResource(nomFenetre)).load();
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.centerOnScreen();
+        stage.setTitle(titreFenetre);
         stage.show();
     }
 

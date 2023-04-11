@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <Pane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projetreservationsejours.controlleur.MainController">
    <children>
       <VBox prefHeight="606.0" prefWidth="1042.0">
@@ -22,9 +21,9 @@
                <children>
                   <Pane prefHeight="63.0" prefWidth="1046.0">
                      <children>
-                        <Button layoutX="806.0" layoutY="19.0" mnemonicParsing="false" text="Se connecter" />
-                        <Button layoutX="928.0" layoutY="19.0" mnemonicParsing="false" text="S'inscrire" />
-                        <ImageView fitHeight="63.0" fitWidth="101.0" layoutX="473.0" pickOnBounds="true" preserveRatio="true">
+                        <Button fx:id="boutonConnexion" layoutX="806.0" layoutY="19.0" mnemonicParsing="false" text="Se connecter" />
+                        <Button fx:id="bountonInscription" layoutX="928.0" layoutY="19.0" mnemonicParsing="false" onAction="#showPageInscription" text="S'inscrire" />
+                        <ImageView fitHeight="114.0" fitWidth="274.0" layoutX="441.0" layoutY="-27.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@images/logo.png" />
                            </image>
