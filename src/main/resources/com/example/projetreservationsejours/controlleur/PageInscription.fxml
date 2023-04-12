@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="460.0" prefWidth="521.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projetreservationsejours.controlleur.PageInscriptionControlleur">
+<Pane fx:id="pageInscriptionStage" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="460.0" prefWidth="521.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projetreservationsejours.controlleur.PageInscriptionControlleur">
    <children>
       <Text layoutX="55.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prénom :" />
       <Text layoutX="55.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom :" />
