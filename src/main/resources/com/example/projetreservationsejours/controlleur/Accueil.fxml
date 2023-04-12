@@ -62,24 +62,24 @@
                            <children>
                               <Pane prefHeight="119.0" prefWidth="1024.0">
                                  <children>
-                                    <TextField layoutX="14.0" layoutY="51.0" prefWidth="204.0" promptText="Destination" style="-fx-background-image: url('https://cdn-icons-png.flaticon.com/512/5219/5219383.png'); -fx-background-repeat: no-repeat; -fx-background-position: right center; -fx-background-size: 20px 20px;" />
-                                    <DatePicker layoutX="568.0" layoutY="51.0" promptText="Départ" />
-                                    <DatePicker layoutX="338.0" layoutY="51.0" promptText="Arrivée" />
+                                    <TextField fx:id="searchTextField" layoutX="14.0" layoutY="51.0" prefWidth="204.0" promptText="Destination" style="-fx-background-image: url('https://cdn-icons-png.flaticon.com/512/5219/5219383.png'); -fx-background-repeat: no-repeat; -fx-background-position: right center; -fx-background-size: 20px 20px;" />
+                                    <DatePicker fx:id="dateFin" layoutX="568.0" layoutY="51.0" promptText="Départ" />
+                                    <DatePicker fx:id="dateDebut" layoutX="338.0" layoutY="51.0" promptText="Arrivée" />
                                     <ChoiceBox layoutX="825.0" layoutY="51.0" prefWidth="150.0" />
-                                    <Button layoutX="485.0" layoutY="115.0" mnemonicParsing="false" text="Rechercher" />
+                                    <Button layoutX="485.0" layoutY="115.0" mnemonicParsing="false" onAction="#searchBar" text="Rechercher" />
                                  </children>
                               </Pane>
                            </children>
                         </HBox>
                         <VBox alignment="CENTER" prefHeight="721.0" prefWidth="1023.0" spacing="20.0">
-                           <padding>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                           </padding>
+                            <padding>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                            </padding>
                            <children>
                               <VBox fx:id="cardContainer" />
                            </children>
-
-                        </VBox>
+                        
+                                                      </VBox>
                      </children>
                   </FlowPane>
                </content>
