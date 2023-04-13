@@ -224,6 +224,7 @@ public class MainController implements Initializable {
         application.userConnected = null;
         userName.setText("");
         changeHeaderVisibility();
+        application.fenetreControlleur.showNotification("Deconnexion","Vous êtes désormais déconnecté",2000,"images/Right.png");
     }
 
     /**

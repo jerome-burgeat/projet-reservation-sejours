@@ -142,6 +142,7 @@ public class CardDetailsControlleur implements Initializable {
         userName.setText("");
         changeHeaderVisibility();
         application.fenetreControlleur.changerDeFenetre("Accueil.fxml");
+        application.fenetreControlleur.showNotification("Deconnexion","Vous êtes désormais déconnecté",2000,"images/Right.png");
     }
 
     public boolean isUserConnected() {
