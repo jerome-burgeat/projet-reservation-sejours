@@ -19,7 +19,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-
 import java.io.IOException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
@@ -42,13 +41,13 @@ public class MainController implements Initializable {
     private DatePicker dateFin;
 
     @FXML
-    private Button connexion;
+    private Button boutonConnexion;
+
+    @FXML
+    private Button bountonInscription;
 
     @FXML
     private ImageView home;
-
-    @FXML
-    private Button inscription;
 
     @FXML
     private ImageView logout;
@@ -70,6 +69,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+
         changeHeaderVisibility();
         // Initialisation de la
         AllLocation allLocation = new AllLocation();
@@ -207,16 +207,13 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    void connexion(MouseEvent event) {
-        AllUser users = new AllUser();
-        try {
-            users.loadData("utilisateurs.csv");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        application.userConnected = users.getUsers().get(8);
-        userName.setText(application.userConnected.getNom());
-        changeHeaderVisibility();
+    void showPageInscription(ActionEvent event) throws IOException {
+        application.fenetreControlleur.popupFenetre("PageInscription.fxml","S'inscrire");
+    }
+
+    @FXML
+    void showPageConnexion(ActionEvent event) throws IOException {
+        application.fenetreControlleur.popupFenetre("PageConnexion.fxml","Se connecter");
     }
 
     /**
@@ -247,8 +244,8 @@ public class MainController implements Initializable {
         /*
         * Only visible when the user is disconnected
          */
-        connexion.setVisible(!isUserConnected());
-        inscription.setVisible(!isUserConnected());
+        boutonConnexion.setVisible(!isUserConnected());
+        bountonInscription.setVisible(!isUserConnected());
     }
 
     /**
@@ -256,6 +253,9 @@ public class MainController implements Initializable {
      * @return boolean
      * */
     public boolean isUserConnected() {
+        if(application.userConnected != null) {
+            System.out.println(application.userConnected.toString());
+        }
         return application.userConnected != null;
     }
 }

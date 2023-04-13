@@ -3,6 +3,7 @@ module com.example.projetreservationsejours {
     requires javafx.fxml;
     requires javafx.web;
     requires javafx.graphics;
+    requires org.controlsfx.controls;
 
     opens com.example.projetreservationsejours to javafx.fxml;
     exports com.example.projetreservationsejours;
