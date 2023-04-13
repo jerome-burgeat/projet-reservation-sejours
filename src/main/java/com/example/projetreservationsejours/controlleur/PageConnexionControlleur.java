@@ -1,6 +1,5 @@
 package com.example.projetreservationsejours.controlleur;
 import com.example.projetreservationsejours.Application;
-import com.example.projetreservationsejours.modele.AllUser;
 import com.example.projetreservationsejours.modele.User;
 import javafx.application.Preloader;
 import javafx.event.ActionEvent;
@@ -52,26 +51,14 @@ public class PageConnexionControlleur extends Preloader implements Initializable
 
     private User user = new User();
 
-    private AllUser allUsers =  new AllUser();
-
     @FXML
     void checkHote(ActionEvent event) {
-        if(checkboxHote.isSelected()){
-            checkboxVoyageur.setDisable(true);
-        }
-        else{
-            checkboxVoyageur.setDisable(false);
-        }
+        checkboxVoyageur.setDisable(checkboxHote.isSelected());
     }
 
     @FXML
     void checkVoyageur(ActionEvent event) {
-        if(checkboxVoyageur.isSelected()){
-            checkboxHote.setDisable(true);
-        }
-        else{
-            checkboxHote.setDisable(false);
-        }
+        checkboxHote.setDisable(checkboxVoyageur.isSelected());
     }
 
     Boolean verifyTextFieldEmpty(TextField textfield,Text text, String error,Boolean isValid){
@@ -94,7 +81,7 @@ public class PageConnexionControlleur extends Preloader implements Initializable
     }
 
     @FXML
-    void verifyInscriptionDetails(ActionEvent event) {
+    void verifyInscriptionDetails(ActionEvent event) throws IOException {
         Boolean isValid = true;
         Boolean found = false;
         resetAllText();
@@ -106,11 +93,12 @@ public class PageConnexionControlleur extends Preloader implements Initializable
             isValid = false;
         }
         if(isValid){
-            for(int i=0; i<allUsers.getUsers().size() && !found; i++){
-                if(allUsers.getUsers().get(i).getUsername().equals(nomUtilisateur.getText()) && allUsers.getUsers().get(i).getPassword().equals(motDePasse.getText())){
+            for(int i=0; i<application.allUsers.getUsers().size() && !found; i++){
+                if(application.allUsers.getUsers().get(i).getUsername().equals(nomUtilisateur.getText()) && application.allUsers.getUsers().get(i).getPassword().equals(motDePasse.getText())){
                     found=true;
                     application.fenetreControlleur.showNotification("Connexion","Vous êtes désormais connecté",2000,"images/Right.png");
                     application.userConnected = user;
+                    application.fenetreControlleur.changerDeFenetre("Accueil.fxml");
                     Stage stage = (Stage) pageConnexionStage.getScene().getWindow();
                     stage.close();
                 }
@@ -127,11 +115,6 @@ public class PageConnexionControlleur extends Preloader implements Initializable
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            allUsers.loadData("utilisateurs.csv");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
     }
 }

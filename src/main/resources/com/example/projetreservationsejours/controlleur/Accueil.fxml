@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
 
 <Pane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projetreservationsejours.controlleur.MainController">
    <children>
@@ -22,34 +21,13 @@
                <children>
                   <Pane prefHeight="63.0" prefWidth="1046.0">
                      <children>
-                        <Button fx:id="boutonConnexion" layoutX="806.0" layoutY="19.0" mnemonicParsing="false" onMouseClicked="#connexion" text="Se connecter" />
-                        <Button fx:id="boutonInscription" layoutX="928.0" layoutY="19.0" mnemonicParsing="false" text="S'inscrire" />
-                        <ImageView fitHeight="63.0" fitWidth="101.0" layoutX="473.0" onMouseClicked="#backHome" pickOnBounds="true" preserveRatio="true">
+                        <Button fx:id="boutonConnexion" layoutX="806.0" layoutY="19.0" mnemonicParsing="false" onAction="#showPageConnexion" text="Se connecter" />
+                        <Button fx:id="bountonInscription" layoutX="928.0" layoutY="19.0" mnemonicParsing="false" onAction="#showPageInscription" text="S'inscrire" />
+                        <ImageView fitHeight="114.0" fitWidth="274.0" layoutX="441.0" layoutY="-27.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/logo.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="logout" fitHeight="23.0" fitWidth="42.0" layoutX="1005.0" layoutY="20.0" onMouseClicked="#logout" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/logout.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="user" fitHeight="23.0" fitWidth="42.0" layoutX="917.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/user.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="shopping_cart" fitHeight="23.0" fitWidth="42.0" layoutX="867.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/shopping_basket.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="home" fitHeight="23.0" fitWidth="42.0" layoutX="806.0" layoutY="20.0" onMouseClicked="#backHome" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/home.png" />
-                           </image>
-                        </ImageView>
-                        <Text fx:id="userName" layoutX="951.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="53.9921875" />
                      </children>
                   </Pane>
                </children>
@@ -72,14 +50,14 @@
                            </children>
                         </HBox>
                         <VBox alignment="CENTER" prefHeight="721.0" prefWidth="1023.0" spacing="20.0">
-                           <padding>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                           </padding>
+                            <padding>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                            </padding>
                            <children>
-                              <VBox fx:id="cardContainer" />
+                              <Button mnemonicParsing="false" text="Button" />
                            </children>
-
-                        </VBox>
+                        
+                                                      </VBox>
                      </children>
                   </FlowPane>
                </content>

@@ -1,6 +1,5 @@
 package com.example.projetreservationsejours.controlleur;
 import com.example.projetreservationsejours.Application;
-import com.example.projetreservationsejours.modele.AllUser;
 import com.example.projetreservationsejours.modele.User;
 import javafx.application.Platform;
 import javafx.application.Preloader;
@@ -80,8 +79,6 @@ public class PageInscriptionControlleur extends Preloader implements Initializab
 
     private User user = new User();
 
-    private AllUser allUsers =  new AllUser();
-
     public void setButton(Button button) {
             button.setBackground(new Background(new BackgroundFill(Color.WHEAT, null, null)));
             button.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
@@ -89,22 +86,12 @@ public class PageInscriptionControlleur extends Preloader implements Initializab
 
     @FXML
     void checkHote(ActionEvent event) {
-        if(checkboxHote.isSelected()){
-            checkboxVoyageur.setDisable(true);
-        }
-        else{
-            checkboxVoyageur.setDisable(false);
-        }
+        checkboxVoyageur.setDisable(checkboxHote.isSelected());
     }
 
     @FXML
     void checkVoyageur(ActionEvent event) {
-        if(checkboxVoyageur.isSelected()){
-            checkboxHote.setDisable(true);
-        }
-        else{
-            checkboxHote.setDisable(false);
-        }
+        checkboxHote.setDisable(checkboxVoyageur.isSelected());
     }
 
     Boolean verifyTextFieldEmpty(TextField textfield,Text text, String error,Boolean isValid){
@@ -161,15 +148,15 @@ public class PageInscriptionControlleur extends Preloader implements Initializab
             isValid = false;
         }
         if(isValid){
-            for(int i=0; i<allUsers.getUsers().size() && isValid; i++){
-               if(allUsers.getUsers().get(i).getUsername().equals(nomUtilisateur.getText()) || allUsers.getUsers().get(i).getEmail().equals(email.getText())){
+            for(int i=0; i<application.allUsers.getUsers().size() && isValid; i++){
+               if(application.allUsers.getUsers().get(i).getUsername().equals(nomUtilisateur.getText()) || application.allUsers.getUsers().get(i).getEmail().equals(email.getText())){
                    erreurCheckboxTermes.setText("Cet utilisateur existe déjà ! ");
                    isValid= false;
                }
             }
         }
         if(isValid){
-            user.setId(allUsers.getUsers().size()+1);
+            user.setId(application.allUsers.getUsers().size()+1);
             user.setPrenom(prenom.getText());
             user.setNom(nom.getText());
             user.setUsername(nomUtilisateur.getText());
@@ -177,7 +164,7 @@ public class PageInscriptionControlleur extends Preloader implements Initializab
             user.setPassword(motDePasse.getText());
             user.setVoyageur(checkboxVoyageur.isSelected());
             user.setHote(checkboxHote.isSelected());
-            allUsers.addNewUserToCsv("utilisateurs.csv",user);
+            application.allUsers.addNewUserToCsv("utilisateurs.csv",user);
             application.fenetreControlleur.showNotification("Connexion","Votre inscription a été validé",2000,"images/Right.png");
             application.userConnected = user;
             Stage stage = (Stage) pageInscriptionStage.getScene().getWindow();
@@ -193,10 +180,6 @@ public class PageInscriptionControlleur extends Preloader implements Initializab
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            allUsers.loadData("utilisateurs.csv");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 }

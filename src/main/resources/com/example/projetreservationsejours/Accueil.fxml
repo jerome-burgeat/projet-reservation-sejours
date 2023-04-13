@@ -21,7 +21,7 @@
                <children>
                   <Pane prefHeight="63.0" prefWidth="1046.0">
                      <children>
-                        <Button fx:id="boutonConnexion" layoutX="806.0" layoutY="19.0" mnemonicParsing="false" text="Se connecter" />
+                        <Button fx:id="boutonConnexion" layoutX="806.0" layoutY="19.0" mnemonicParsing="false" onAction="#showPageConnexion" text="Se connecter" />
                         <Button fx:id="bountonInscription" layoutX="928.0" layoutY="19.0" mnemonicParsing="false" onAction="#showPageInscription" text="S'inscrire" />
                         <ImageView fitHeight="114.0" fitWidth="274.0" layoutX="441.0" layoutY="-27.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -54,7 +54,7 @@
                                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                             </padding>
                            <children>
-                              <Button mnemonicParsing="false" onAction="#changerDeFenetre" text="Button" />
+                              <Button mnemonicParsing="false" text="Button" />
                            </children>
                         
                                                       </VBox>

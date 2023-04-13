@@ -32,7 +32,7 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    void changerDeFenetre(ActionEvent event) throws IOException {
-        application.fenetreControlleur.changerDeFenetre("Accueil.fxml");
+    void showPageConnexion(ActionEvent event) throws IOException {
+        application.fenetreControlleur.popupFenetre("PageConnexion.fxml","Se connecter");
     }
 }
