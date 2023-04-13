@@ -81,7 +81,7 @@ public class MainController implements Initializable {
         allLocation.displayLocationList();
 
         if(this.isUserConnected()) {
-            userName.setText(application.userConnected.getNom());
+            userName.setText(application.userConnected.getUsername());
         }
 
         int cpt = 0;
@@ -128,7 +128,7 @@ public class MainController implements Initializable {
         allLocation.displayLocationList();
 
         if(this.isUserConnected()) {
-            userName.setText(application.userConnected.getNom());
+            userName.setText(application.userConnected.getUsername());
         }
 
         cardContainer.getChildren().clear();
@@ -145,7 +145,7 @@ public class MainController implements Initializable {
             allLocation.displayLocationList();
 
             if(this.isUserConnected()) {
-                userName.setText(application.userConnected.getNom());
+                userName.setText(application.userConnected.getUsername());
             }
             for (Location card : allLocation.getLocationList()) {
                 try {

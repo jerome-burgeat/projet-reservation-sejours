@@ -97,7 +97,7 @@ public class PageConnexionControlleur extends Preloader implements Initializable
                 if(application.allUsers.getUsers().get(i).getUsername().equals(nomUtilisateur.getText()) && application.allUsers.getUsers().get(i).getPassword().equals(motDePasse.getText())){
                     found=true;
                     application.fenetreControlleur.showNotification("Connexion","Vous êtes désormais connecté",2000,"images/Right.png");
-                    application.userConnected = user;
+                    application.userConnected = application.allUsers.findUserByUsernameAndPassword(nomUtilisateur.getText(), motDePasse.getText());
                     application.fenetreControlleur.changerDeFenetre("Accueil.fxml");
                     Stage stage = (Stage) pageConnexionStage.getScene().getWindow();
                     stage.close();

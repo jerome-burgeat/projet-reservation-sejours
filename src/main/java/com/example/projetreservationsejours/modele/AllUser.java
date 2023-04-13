@@ -50,6 +50,16 @@ public class AllUser {
         }
     }
 
+    public User findUserByUsernameAndPassword(String username, String password) {
+        User user = null;
+        for (int i=0; user == null; i++) {
+            if(this.users.get(i).getUsername().equals(username) && this.users.get(i).getPassword().equals(password)) {
+                user = this.users.get(i);
+            }
+        }
+        return user;
+    }
+
     public void addNewUserToCsv(String filename,User user) throws IOException {
         String pathRessources = "\\src\\main\\resources\\com\\example\\projetreservationsejours\\ressources\\";
         Path path = Paths.get(System.getProperty("user.dir")+ pathRessources + filename);
