@@ -20,12 +20,12 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <TextField fx:id="nomUtilisateur" layoutX="180.0" layoutY="159.0" prefHeight="16.0" prefWidth="301.0" promptText="Nom d'utilisateur">
+      <TextField fx:id="nom" layoutX="180.0" layoutY="105.0" prefHeight="16.0" prefWidth="301.0" promptText="Nom">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <TextField fx:id="nom" layoutX="180.0" layoutY="105.0" prefHeight="16.0" prefWidth="301.0" promptText="Nom">
+      <TextField fx:id="nomUtilisateur" layoutX="180.0" layoutY="159.0" prefHeight="16.0" prefWidth="301.0" promptText="Nom d'utilisateur">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor>
@@ -35,6 +35,7 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
+      <PasswordField fx:id="motDePasse" layoutX="180.0" layoutY="269.0" prefHeight="25.0" prefWidth="301.0" promptText="Mot de passe" />
       <CheckBox fx:id="checkboxVoyageur" layoutX="53.0" layoutY="337.0" mnemonicParsing="false" onAction="#checkVoyageur" text="Voyageur" />
       <CheckBox fx:id="checkboxHote" layoutX="180.0" layoutY="337.0" mnemonicParsing="false" onAction="#checkHote" text="Hôte" />
       <CheckBox fx:id="chekboxTermesEtConditions" layoutX="53.0" layoutY="392.0" mnemonicParsing="false" text="J'ai lu et j'accepte les termes et conditions de l'application" />
@@ -46,6 +47,5 @@
       <Text fx:id="erreurPrenom" layoutX="180.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" />
       <Text fx:id="erreurCheckbox" layoutX="267.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" />
       <Text fx:id="erreurCheckboxTermes" layoutX="75.0" layoutY="426.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-      <PasswordField fx:id="motDePasse" layoutX="180.0" layoutY="269.0" prefHeight="25.0" prefWidth="301.0" promptText="Mot de passe" />
    </children>
 </Pane>

@@ -42,12 +42,7 @@ public class AllUser {
 
     public String verifyIfVoyageurOrHote(Boolean bool)
     {
-        if(bool){
-            return "1";
-        }
-        else{
-            return "0";
-        }
+        return bool ? "1" : "0";
     }
 
     public User findUserByUsernameAndPassword(String username, String password) {

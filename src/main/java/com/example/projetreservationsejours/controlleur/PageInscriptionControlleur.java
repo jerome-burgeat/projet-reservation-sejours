@@ -86,12 +86,12 @@ public class PageInscriptionControlleur extends Preloader implements Initializab
 
     @FXML
     void checkHote(ActionEvent event) {
-        checkboxVoyageur.setDisable(checkboxHote.isSelected());
+
     }
 
     @FXML
     void checkVoyageur(ActionEvent event) {
-        checkboxHote.setDisable(checkboxVoyageur.isSelected());
+
     }
 
     Boolean verifyTextFieldEmpty(TextField textfield,Text text, String error,Boolean isValid){
@@ -165,8 +165,10 @@ public class PageInscriptionControlleur extends Preloader implements Initializab
             user.setVoyageur(checkboxVoyageur.isSelected());
             user.setHote(checkboxHote.isSelected());
             application.allUsers.addNewUserToCsv("utilisateurs.csv",user);
+            application.allUsers.loadData("utilisateurs.csv");
             application.fenetreControlleur.showNotification("Connexion","Votre inscription a été validé",2000,"images/Right.png");
-            application.userConnected = user;
+            application.userConnected = application.allUsers.findUserByUsernameAndPassword(user.getUsername(),user.getPassword());
+            application.fenetreControlleur.changerDeFenetre("Accueil.fxml");
             System.out.println("Inscription" + application.userConnected.toString());
             Stage stage = (Stage) pageInscriptionStage.getScene().getWindow();
             stage.close();
