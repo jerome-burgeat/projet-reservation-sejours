@@ -12,6 +12,7 @@ public class Location {
     private String title;
     private int numberOfPeople;
     private String host;
+    private boolean location_loue;
     private String urlPhoto;
 
     // getters and setters omitted for brevity
@@ -28,7 +29,8 @@ public class Location {
         location.setTitle(tokens[5]);
         location.setNumberOfPeople(Integer.parseInt(tokens[6]));
         location.setHost(tokens[7]);
-        location.setUrlPhoto(tokens[8]);
+        location.setLocation_loue(Integer.parseInt(tokens[8]) == 1);
+        location.setUrlPhoto(tokens[9]);
         return location;
     }
 
@@ -92,6 +94,10 @@ public class Location {
         this.host = host;
     }
 
+    public boolean isLocation_loue() { return location_loue; }
+
+    public void setLocation_loue(boolean location_loue) { this.location_loue = location_loue; }
+
     public String getUrlPhoto() { return urlPhoto; }
 
     public void setUrlPhoto(String urlPhoto) { this.urlPhoto = urlPhoto;}
@@ -102,10 +108,11 @@ public class Location {
                 "startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", price=" + price +
-                ", location='" + location +
-                ", title='" + title +
+                ", location=" + location +
+                ", title=" + title +
                 ", numberOfPeople=" + numberOfPeople +
-                ", host='" + host +
+                ", host=" + host +
+                ", isLocationLoue=" + location_loue +
                 ", urlPhoto='" + urlPhoto +
                 '}';
     }
