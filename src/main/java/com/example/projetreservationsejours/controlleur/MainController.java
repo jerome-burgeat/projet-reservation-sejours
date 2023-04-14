@@ -84,28 +84,7 @@ public class MainController implements Initializable {
             userName.setText(application.userConnected.getUsername());
         }
 
-        int cpt = 0;
-        HBox hBox = new HBox();
-        hBox.setAlignment(Pos.BASELINE_CENTER);
-        for (Location card : allLocation.getLocationList()) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("cardTemplate.fxml"));
-                AnchorPane cardNode = loader.load();
-                CardTemplateControlleur cardController = loader.getController();
-                cardController.setCard(card);
-                if (cpt < 3) {
-                    hBox.getChildren().add(cardNode);
-                    cpt++;
-                } else {
-                    cardContainer.getChildren().add(hBox);
-                    cpt = 0;
-                    hBox = new HBox();
-                    hBox.setAlignment(Pos.BASELINE_CENTER);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        displayAllLocation(allLocation);
     }
 
 
@@ -121,79 +100,42 @@ public class MainController implements Initializable {
         AllLocation allLocation = new AllLocation();
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            allLocation.loadData("locations.csv", searchTextField.getText(), dateDebut.getValue().format(formatter), dateFin.getValue().format(formatter));
+            if(dateDebut.getValue() == null) {
+                allLocation.loadData("locations.csv", searchTextField.getText());
+            }
+            else {
+                allLocation.loadData("locations.csv", searchTextField.getText(), dateDebut.getValue().format(formatter), dateFin.getValue().format(formatter));
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        allLocation.displayLocationList();
+        //allLocation.displayLocationList();
 
         if(this.isUserConnected()) {
             userName.setText(application.userConnected.getUsername());
         }
 
         cardContainer.getChildren().clear();
-        int cpt = 0;
-        HBox hBox = new HBox();
-        hBox.setAlignment(Pos.BASELINE_CENTER);
-
-        if(searchTextField.getText().equals("")) {
-            try {
-                allLocation.loadData("locations.csv");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            allLocation.displayLocationList();
-
-            if(this.isUserConnected()) {
-                userName.setText(application.userConnected.getUsername());
-            }
-            for (Location card : allLocation.getLocationList()) {
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("cardTemplate.fxml"));
-                    AnchorPane cardNode = loader.load();
-                    CardTemplateControlleur cardController = loader.getController();
-                    cardController.setCard(card);
-                    if (cpt < 3) {
-                        hBox.getChildren().add(cardNode);
-                        cpt++;
-                    } else {
-                        cardContainer.getChildren().add(hBox);
-                        cpt = 0;
-                        hBox = new HBox();
-                        hBox.setAlignment(Pos.BASELINE_CENTER);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        else if (allLocation.getLocationList().isEmpty()) {
+        if (allLocation.getLocationList().isEmpty()) {
+            HBox hBox = new HBox();
+            hBox.setAlignment(Pos.BASELINE_CENTER);
             hBox.getChildren().add(new Text("La recherche n'a pas aboutie"));
             cardContainer.getChildren().add(hBox);
         }
         else {
-            for (Location card : allLocation.getLocationList()) {
+            if(searchTextField.getText().equals("")) {
                 try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("cardTemplate.fxml"));
-                    AnchorPane cardNode = loader.load();
-                    CardTemplateControlleur cardController = loader.getController();
-                    cardController.setCard(card);
-                    if (allLocation.getLocationList().size() < 3) {
-                        hBox.getChildren().add(cardNode);
-                        cardContainer.getChildren().add(hBox);
-                    } else if (cpt < 3) {
-                        hBox.getChildren().add(cardNode);
-                        cpt++;
-                    } else {
-                        cardContainer.getChildren().add(hBox);
-                        cpt = 0;
-                        hBox = new HBox();
-                        hBox.setAlignment(Pos.BASELINE_CENTER);
-                    }
+                    allLocation.loadData("locations.csv");
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
+                allLocation.displayLocationList();
+
+                if (this.isUserConnected()) {
+                    userName.setText(application.userConnected.getUsername());
                 }
             }
+            displayAllLocation(allLocation);
         }
     }
 
@@ -258,5 +200,32 @@ public class MainController implements Initializable {
             System.out.println(application.userConnected.toString());
         }
         return application.userConnected != null;
+    }
+
+    private void displayAllLocation(AllLocation allLocation) {
+        int cpt = 0;
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.BASELINE_CENTER);
+        for (Location card : allLocation.getLocationList()) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("cardTemplate.fxml"));
+                AnchorPane cardNode = loader.load();
+                CardTemplateControlleur cardController = loader.getController();
+                cardController.setCard(card);
+                hBox.getChildren().add(cardNode);
+                cpt++;
+                if((allLocation.getLocationList().size() < 3 && allLocation.getLocationList().size() == cpt)
+                    || cpt==3) {
+                    cardContainer.getChildren().add(hBox);
+                    if(cpt==3) {
+                        cpt = 0;
+                        hBox = new HBox();
+                        hBox.setAlignment(Pos.BASELINE_CENTER);
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

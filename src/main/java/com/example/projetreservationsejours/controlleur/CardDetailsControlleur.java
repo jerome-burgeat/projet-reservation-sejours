@@ -1,14 +1,18 @@
 package com.example.projetreservationsejours.controlleur;
 
 import com.example.projetreservationsejours.Application;
+import com.example.projetreservationsejours.modele.AllCommentaire;
 import com.example.projetreservationsejours.modele.AllUser;
+import com.example.projetreservationsejours.modele.Commentaire;
 import com.example.projetreservationsejours.modele.Location;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -85,6 +89,7 @@ public class CardDetailsControlleur implements Initializable {
         users = new AllUser();
         try {
             users.loadData("utilisateurs.csv");
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -98,7 +103,28 @@ public class CardDetailsControlleur implements Initializable {
         prix.setText(location.getPrice() + " €");
         lieu.setText(location.getLocation());
         nbMaxPersonne.setText(String.valueOf(location.getNumberOfPeople()));
-        hote.setText(users.getUsers().get(Integer.parseInt(location.getHost())-1).getNom());
+        hote.setText(users.getUsers().get(Integer.parseInt(location.getHost_user_id())-1).getNom());
+
+        AllCommentaire commentaireByLocationId = new AllCommentaire();
+        try {
+            commentaireByLocationId.loadData("commentaires.csv", location.getId());
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        for (Commentaire response : commentaireByLocationId.getCommentaireList()) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("CommentaireTemplate.fxml"));
+                AnchorPane cardNode = loader.load();
+                CommentaireTemplateControlleur commentaireControlleur = loader.getController();
+                //commentaireControlleur.setLocationId(locationId);
+                commentaireControlleur.setCommentaire(users.getUsers().get(Integer.parseInt(String.valueOf(response.getUser_id()-1))).getUsername(), response);
+                comments.getChildren().add(cardNode);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @FXML
@@ -131,8 +157,7 @@ public class CardDetailsControlleur implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        application.userConnected = users.getUsers().get(8);
-        userName.setText(application.userConnected.getNom());
+        userName.setText(application.userConnected.getUsername());
         changeHeaderVisibility();
     }
 

@@ -26,13 +26,8 @@ public class CardTemplateControlleur {
     @FXML
     private Label prix;
 
-
-
-    public void initialize() {
-    }
-
     public void setCard(Location location) {
-        image.setImage(new Image(location.getUrlPhoto()));
+        //image.setImage(new Image(location.getUrlPhoto()));
         image.setOnMouseClicked((MouseEvent event) -> {
             // Load the card details FXML file
             try {
@@ -42,7 +37,6 @@ public class CardTemplateControlleur {
 
                 CardDetailsControlleur cardDetailsController = fxmlLoader.getController();
                 cardDetailsController.setCard(location);
-
                 Scene scene = new Scene(root);
                 application.fenetreControlleur.getStagePrincipale().centerOnScreen();
                 application.fenetreControlleur.getStagePrincipale().setScene(scene);
