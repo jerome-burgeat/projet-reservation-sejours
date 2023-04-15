@@ -16,8 +16,6 @@ import java.util.ResourceBundle;
 
 public class CommentaireTemplateControlleur {
 
-    private int locationId;
-
     @FXML
     private Label commentaire;
 
@@ -26,10 +24,6 @@ public class CommentaireTemplateControlleur {
 
     @FXML
     private Label username;
-
-    public void setLocationId(int id) {
-        this.locationId = id;
-    }
 
     public void setCommentaire(String pseudo, Commentaire response) {
         username.setText(pseudo);

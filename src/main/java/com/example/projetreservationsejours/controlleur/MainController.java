@@ -3,6 +3,7 @@ package com.example.projetreservationsejours.controlleur;
 import com.example.projetreservationsejours.Application;
 
 import com.example.projetreservationsejours.modele.AllLocation;
+import com.example.projetreservationsejours.modele.AllLocationLoue;
 import com.example.projetreservationsejours.modele.AllUser;
 import com.example.projetreservationsejours.modele.Location;
 import javafx.event.ActionEvent;
@@ -74,14 +75,21 @@ public class MainController implements Initializable {
         // Initialisation de la
         AllLocation allLocation = new AllLocation();
         try {
-            allLocation.loadData("locations.csv");
+            allLocation.loadDataAvailable("locations.csv", true);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        allLocation.displayLocationList();
+        //allLocation.displayLocationList();
 
         if(this.isUserConnected()) {
             userName.setText(application.userConnected.getUsername());
+            AllLocationLoue allLocationLoue = new AllLocationLoue();
+            try {
+                allLocationLoue.loadData("location_loue.csv", application.userConnected.getId());
+                nbLocation.setText(String.valueOf(allLocationLoue.howManyLocationLoue()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         displayAllLocation(allLocation);
@@ -96,7 +104,7 @@ public class MainController implements Initializable {
      *  - possibilities to search on field or more
      * */
     @FXML
-    void searchBar(ActionEvent event) {
+    void searchBar(ActionEvent event) throws IOException {
         AllLocation allLocation = new AllLocation();
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -133,6 +141,9 @@ public class MainController implements Initializable {
 
                 if (this.isUserConnected()) {
                     userName.setText(application.userConnected.getUsername());
+                    AllLocationLoue allLocationLoue = new AllLocationLoue();
+                    allLocationLoue.loadData("location_loue.csv", application.userConnected.getId());
+                    nbLocation.setText(String.valueOf(allLocationLoue.howManyLocationLoue()));
                 }
             }
             displayAllLocation(allLocation);
@@ -195,12 +206,7 @@ public class MainController implements Initializable {
      * Check if the user is connected
      * @return boolean
      * */
-    public boolean isUserConnected() {
-        if(application.userConnected != null) {
-            System.out.println(application.userConnected.toString());
-        }
-        return application.userConnected != null;
-    }
+    public boolean isUserConnected() { return application.userConnected != null; }
 
     private void displayAllLocation(AllLocation allLocation) {
         int cpt = 0;

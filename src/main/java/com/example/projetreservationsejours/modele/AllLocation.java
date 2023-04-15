@@ -28,6 +28,21 @@ public class AllLocation {
         }
     }
 
+    public void loadDataAvailable(String filename, boolean available) throws IOException {
+        available = true;
+        String pathRessources = "\\src\\main\\resources\\com\\example\\projetreservationsejours\\ressources\\";
+        Path path = Paths.get(System.getProperty("user.dir")+ pathRessources + filename);
+        try (BufferedReader reader = new BufferedReader(new FileReader(path.toRealPath().toFile()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                Location location = Location.fromCsv(line);
+                if(!location.isLocation_loue()) {
+                    locationList.add(location);
+                }
+            }
+        }
+    }
+
     public void loadData(String filename, String country) throws IOException {
         String pathRessources = "\\src\\main\\resources\\com\\example\\projetreservationsejours\\ressources\\";
         Path path = Paths.get(System.getProperty("user.dir")+ pathRessources + filename);

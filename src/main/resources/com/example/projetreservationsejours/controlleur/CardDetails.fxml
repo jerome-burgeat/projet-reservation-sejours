@@ -21,9 +21,9 @@
                <children>
                   <Pane prefHeight="63.0" prefWidth="1046.0">
                      <children>
-                        <Button fx:id="connexion" layoutX="806.0" layoutY="19.0" mnemonicParsing="false" onMouseClicked="#connexion" text="Se connecter" />
-                        <Button fx:id="inscription" layoutX="928.0" layoutY="19.0" mnemonicParsing="false" text="S'inscrire" />
-                        <ImageView fitHeight="63.0" fitWidth="101.0" layoutX="473.0" onMouseClicked="#backHome" pickOnBounds="true" preserveRatio="true">
+                        <Button fx:id="boutonConnexion" layoutX="806.0" layoutY="19.0" mnemonicParsing="false" onAction="#showPageConnexion" text="Se connecter" />
+                        <Button fx:id="bountonInscription" layoutX="928.0" layoutY="19.0" mnemonicParsing="false" onAction="#showPageInscription" text="S'inscrire" />
+                        <ImageView fitHeight="114.0" fitWidth="274.0" layoutX="441.0" layoutY="-27.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/logo.png" />
                            </image>
@@ -49,6 +49,7 @@
                            </image>
                         </ImageView>
                         <Text fx:id="userName" layoutX="951.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="53.9921875" />
+                        <Text fx:id="nbLocation" layoutX="890.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="16.9921875" />
                      </children>
                   </Pane>
                </children>
