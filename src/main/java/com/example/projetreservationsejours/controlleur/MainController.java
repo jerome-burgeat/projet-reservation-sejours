@@ -79,7 +79,6 @@ public class MainController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        //allLocation.displayLocationList();
 
         if(this.isUserConnected()) {
             userName.setText(application.userConnected.getUsername());
@@ -90,6 +89,14 @@ public class MainController implements Initializable {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
+            shopping_cart.setOnMouseClicked(event -> {
+                try {
+                    application.fenetreControlleur.changerDeFenetre("ShoppingCardDetails.fxml");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
         }
 
         displayAllLocation(allLocation);
