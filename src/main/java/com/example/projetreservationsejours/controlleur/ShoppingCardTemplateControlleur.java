@@ -49,14 +49,16 @@ public class ShoppingCardTemplateControlleur {
         AllUser users = new AllUser();
         users.loadData("utilisateurs.csv");
 
-        image.setImage(new Image(allLocation.getLocationList().get(locationLoue.getLocation_id()).getUrlPhoto()));
-        titre.setText((allLocation.getLocationList().get(locationLoue.getLocation_id()).getTitle()));
-        dateDebut.setText((allLocation.getLocationList().get(locationLoue.getLocation_id()).getStartDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
-        dateFin.setText((allLocation.getLocationList().get(locationLoue.getLocation_id()).getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
-        prix.setText((allLocation.getLocationList().get(locationLoue.getLocation_id()).getPrice() + " €"));
-        lieu.setText((allLocation.getLocationList().get(locationLoue.getLocation_id()).getLocation()));
-        nbMaxPersonne.setText(String.valueOf((allLocation.getLocationList().get(locationLoue.getLocation_id()).getNumberOfPeople())));
-        hote.setText(users.getUsers().get(Integer.parseInt(allLocation.getLocationList().get(locationLoue.getLocation_id()).getHost_user_id())-1).getNom());
+        Location currentLocation = allLocation.getLocationList().get(locationLoue.getLocation_id());
+
+        image.setImage(new Image(currentLocation.getUrlPhoto()));
+        titre.setText(currentLocation.getTitle());
+        dateDebut.setText(currentLocation.getStartDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        dateFin.setText(currentLocation.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        prix.setText(currentLocation.getPrice() + " €");
+        lieu.setText(currentLocation.getLocation());
+        nbMaxPersonne.setText(String.valueOf(currentLocation.getNumberOfPeople()));
+        hote.setText(users.getUsers().get(Integer.parseInt(currentLocation.getHost_user_id())-1).getNom());
     }
 
     @FXML
