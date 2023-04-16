@@ -3,12 +3,16 @@ package com.example.projetreservationsejours.controlleur;
 import com.example.projetreservationsejours.Application;
 import com.example.projetreservationsejours.modele.*;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -79,6 +83,9 @@ public class CardDetailsControlleur implements Initializable {
     @FXML
     private Text userName;
 
+    @FXML
+    private TextArea addCommentaire;
+
     private int locationId;
 
     @Override
@@ -114,6 +121,50 @@ public class CardDetailsControlleur implements Initializable {
         lieu.setText(location.getLocation());
         nbMaxPersonne.setText(String.valueOf(location.getNumberOfPeople()));
         hote.setText(users.getUsers().get(Integer.parseInt(location.getHost_user_id())-1).getNom());
+        addCommentaire.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.ENTER)  {
+                    //Si l'utilisateur n'est pas connecté
+                    if(!isUserConnected()) {
+                        application.fenetreControlleur.showNotification("Alerte","Veuillez vous connecter !",2000,"images/Right.png");
+                    }
+                    //Si l'utilisateur est connecté
+                    else {
+                        String text = addCommentaire.getText();
+                        comments.getChildren().clear();
+
+                        AllCommentaire commentaireByLocationId = new AllCommentaire();
+
+                        try {
+                            commentaireByLocationId.loadData("commentaires.csv");
+                            Commentaire commentaire = new Commentaire(commentaireByLocationId.getCommentaireList().size(),
+                                    location.getId(), application.userConnected.getId(), text);
+                            commentaireByLocationId.getCommentaireList().clear();
+                            commentaireByLocationId.addNewCommentaireToCsv("commentaires.csv", commentaire);
+                            commentaireByLocationId.loadData("commentaires.csv", location.getId());
+                            commentaireByLocationId.displayCommentaireList();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                        for (Commentaire response : commentaireByLocationId.getCommentaireList()) {
+                            try {
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource("CommentaireTemplate.fxml"));
+                                AnchorPane cardNode = loader.load();
+                                CommentaireTemplateControlleur commentaireControlleur = loader.getController();
+                                commentaireControlleur.setCommentaire(users.getUsers().get(Integer.parseInt(String.valueOf(response.getUser_id() - 1))).getUsername(), response);
+                                comments.getChildren().add(cardNode);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        application.fenetreControlleur.showNotification("Commentaire","Votre commentaire est publié !",2000,"images/Right.png");
+                        addCommentaire.setText("");
+                    }
+                }
+            }
+        });
 
         AllCommentaire commentaireByLocationId = new AllCommentaire();
         try {

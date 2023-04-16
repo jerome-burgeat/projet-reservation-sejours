@@ -62,6 +62,14 @@ public class FenetreControlleur {
         notification.text(text);
         notification.graphic(image);
         notification.owner(getStagePrincipale());
-        Platform.runLater(() -> notification.show());
+        if(title.equals("Alerte")) {
+            Platform.runLater(() -> notification.showWarning());
+        }
+        else if(title.equals("Erreur")) {
+            Platform.runLater(() -> notification.showError());
+        }
+        else {
+            Platform.runLater(() -> notification.show());
+        }
     }
 }

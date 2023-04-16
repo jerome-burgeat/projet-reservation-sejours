@@ -2,6 +2,7 @@ package com.example.projetreservationsejours.modele;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,6 +17,17 @@ public class AllCommentaire {
         allCommentaire = new ArrayList<>();
     }
 
+    public void loadData(String filename) throws IOException {
+        String pathRessources = "\\src\\main\\resources\\com\\example\\projetreservationsejours\\ressources\\";
+        Path path = Paths.get(System.getProperty("user.dir")+ pathRessources + filename);
+        try (BufferedReader reader = new BufferedReader(new FileReader(path.toRealPath().toFile()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                Commentaire commentaire = Commentaire.fromCsv(line);
+                allCommentaire.add(commentaire);
+            }
+        }
+    }
     public void loadData(String filename, int id) throws IOException {
         String pathRessources = "\\src\\main\\resources\\com\\example\\projetreservationsejours\\ressources\\";
         Path path = Paths.get(System.getProperty("user.dir")+ pathRessources + filename);
@@ -42,5 +54,17 @@ public class AllCommentaire {
             System.out.println("    " + this.allCommentaire.get(i).toString());
         }
         System.out.println("}");
+    }
+
+    public void addNewCommentaireToCsv(String filename,Commentaire commentaire) throws IOException {
+        String pathRessources = "\\src\\main\\resources\\com\\example\\projetreservationsejours\\ressources\\";
+        Path path = Paths.get(System.getProperty("user.dir")+ pathRessources + filename);
+        FileWriter writer = new FileWriter(path.toRealPath().toFile(), true);
+        String line = Integer.toString(commentaire.getId()) + ";"
+                + commentaire.getLocation_id() + ";"
+                + commentaire.getUser_id() + ";"
+                + commentaire.getReponse();
+        writer.append(line);
+        writer.close();
     }
 }

@@ -159,7 +159,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <TextArea layoutX="500.0" layoutY="69.0" prefHeight="117.0" prefWidth="341.0" promptText="Rédigez votre réponse" />
+                                    <TextArea fx:id="addCommentaire" layoutX="500.0" layoutY="69.0" prefHeight="117.0" prefWidth="341.0" promptText="Rédigez votre réponse" />
                                     <VBox fx:id="comments" layoutX="483.0" layoutY="236.0" prefHeight="200.0" prefWidth="461.0" />
                                  </children>
                               </Pane>

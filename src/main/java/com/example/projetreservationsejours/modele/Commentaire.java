@@ -13,6 +13,15 @@ public class Commentaire {
 
     private String reponse;
 
+    public Commentaire() {}
+
+    public Commentaire(int id, int location_id, int user_id, String reponse) {
+        this.id = id;
+        this.location_id = location_id;
+        this.user_id = user_id;
+        this.reponse = reponse;
+    }
+
     public static Commentaire fromCsv(String csvLine) {
         String[] tokens = csvLine.split(";");
         Commentaire commentaire = new Commentaire();
