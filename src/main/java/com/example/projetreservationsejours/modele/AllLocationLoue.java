@@ -1,9 +1,6 @@
 package com.example.projetreservationsejours.modele;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.format.DateTimeFormatter;
@@ -53,6 +50,31 @@ public class AllLocationLoue {
                 + 0 ;
         writer.append(line+"\n");
         writer.close();
+    }
+
+    public void deleteLocationLoueFromCsv(String filename, int locationLoueId) throws IOException {
+        String pathRessources = "\\src\\main\\resources\\com\\example\\projetreservationsejours\\ressources\\";
+        Path path = Paths.get(System.getProperty("user.dir") + pathRessources + filename);
+        File inputFile = path.toRealPath().toFile();
+        File tempFile = new File(inputFile.getAbsolutePath() + ".tmp");
+
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+
+        String currentLine;
+        while ((currentLine = reader.readLine()) != null) {
+            String[] values = currentLine.split(";");
+            int id = Integer.parseInt(values[0].trim());
+            if (id != locationLoueId) {
+                writer.write(currentLine + System.getProperty("line.separator"));
+            }
+        }
+
+        writer.close();
+        reader.close();
+
+        inputFile.delete();
+        tempFile.renameTo(inputFile);
     }
 
     public List<LocationLoue> getLocationList() {

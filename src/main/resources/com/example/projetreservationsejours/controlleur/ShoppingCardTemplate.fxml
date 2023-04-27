@@ -80,7 +80,7 @@
                <Image url="@../images/user_tie.png" />
             </image>
          </ImageView>
-         <ImageView fitHeight="23.0" fitWidth="29.0" layoutX="554.0" layoutY="9.0" onMouseClicked="#eraseChoice" pickOnBounds="true" preserveRatio="true">
+         <ImageView fx:id="delete" fitHeight="23.0" fitWidth="29.0" layoutX="554.0" layoutY="9.0" onMouseClicked="#eraseChoice" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@../images/Wrong.png" />
             </image>
