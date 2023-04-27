@@ -110,6 +110,14 @@ public class CardDetailsControlleur implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        shopping_cart.setOnMouseClicked(event -> {
+            try {
+                application.fenetreControlleur.changerDeFenetre("ShoppingCardDetails.fxml");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public void setCard(Location location) {

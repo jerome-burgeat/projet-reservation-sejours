@@ -55,12 +55,14 @@
                <content>
                   <FlowPane prefHeight="722.0" prefWidth="1020.0">
                      <children>
+                        <HBox prefHeight="64.0" prefWidth="1022.0" />
                         <HBox prefHeight="752.0" prefWidth="1023.0">
                            <children>
-                              <VBox fx:id="userChoice" prefHeight="442.0" prefWidth="934.0" />
+                              <VBox fx:id="userChoice1" prefHeight="752.0" prefWidth="168.0" />
+                              <VBox fx:id="userChoice" prefHeight="752.0" prefWidth="647.0" />
                               <Pane prefHeight="442.0" prefWidth="199.0">
                                  <children>
-                                    <Button layoutX="18.0" layoutY="108.0" mnemonicParsing="false" onMouseClicked="#validerShoppingCard" text="Valider le panier" />
+                                    <Button layoutX="49.0" layoutY="21.0" mnemonicParsing="false" onMouseClicked="#validerShoppingCard" text="Valider le panier" />
                                  </children>
                               </Pane>
                            </children>

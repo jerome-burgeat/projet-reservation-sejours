@@ -51,7 +51,7 @@ public class AllLocationLoue {
                 + locationLoue.getLocation_id() + ";"
                 + locationLoue.getUser_id() + ";"
                 + 0 ;
-        writer.append(line);
+        writer.append(line+"\n");
         writer.close();
     }
 

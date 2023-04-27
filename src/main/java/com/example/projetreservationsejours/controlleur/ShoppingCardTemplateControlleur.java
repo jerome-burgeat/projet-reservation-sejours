@@ -6,6 +6,9 @@ import com.example.projetreservationsejours.modele.AllUser;
 import com.example.projetreservationsejours.modele.Location;
 import com.example.projetreservationsejours.modele.LocationLoue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -52,6 +55,22 @@ public class ShoppingCardTemplateControlleur {
         Location currentLocation = allLocation.getLocationList().get(locationLoue.getLocation_id());
 
         image.setImage(new Image(currentLocation.getUrlPhoto()));
+        image.setOnMouseClicked((MouseEvent event) -> {
+            // Load the card details FXML file
+            try {
+
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CardDetails.fxml"));
+                Parent root = fxmlLoader.load();
+
+                CardDetailsControlleur cardDetailsController = fxmlLoader.getController();
+                cardDetailsController.setCard(currentLocation);
+                Scene scene = new Scene(root);
+                application.fenetreControlleur.getStagePrincipale().centerOnScreen();
+                application.fenetreControlleur.getStagePrincipale().setScene(scene);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
         titre.setText(currentLocation.getTitle());
         dateDebut.setText(currentLocation.getStartDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         dateFin.setText(currentLocation.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
