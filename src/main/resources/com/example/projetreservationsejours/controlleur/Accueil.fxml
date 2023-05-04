@@ -74,9 +74,9 @@
                                        <font>
                                           <Font name="Perpetua" size="18.0" />
                                        </font></TextField>
-                                    <DatePicker fx:id="dateDebut" layoutX="522.0" layoutY="42.0" prefHeight="40.0" prefWidth="233.0" promptText="Arrivée" stylesheets="@CSS/Test.css" />
-                                    <DatePicker fx:id="dateFin" layoutX="891.0" layoutY="42.0" prefHeight="40.0" prefWidth="233.0" promptText="Départ" stylesheets="@CSS/Test.css" />
-                                    <ChoiceBox fx:id="viewMode" layoutX="1241.0" layoutY="42.0" prefHeight="40.0" prefWidth="206.0" stylesheets="@CSS/Test.css" />
+                                    <DatePicker fx:id="dateDebut" layoutX="522.0" layoutY="42.0" prefHeight="40.0" prefWidth="233.0" promptText="Arrivée" stylesheets="@../CSS/Test.css" />
+                                    <DatePicker fx:id="dateFin" layoutX="891.0" layoutY="42.0" prefHeight="40.0" prefWidth="233.0" promptText="Départ" stylesheets="@../CSS/Test.css" />
+                                    <ChoiceBox fx:id="viewMode" layoutX="1241.0" layoutY="42.0" prefHeight="40.0" prefWidth="206.0" stylesheets="@../CSS/Test.css" />
                                     <Button fx:id="boutonRecherche" layoutX="709.0" layoutY="107.0" mnemonicParsing="false" onAction="#searchBar" prefHeight="53.0" prefWidth="128.0" text="Rechercher">
                                        <font>
                                           <Font name="Perpetua" size="18.0" />
