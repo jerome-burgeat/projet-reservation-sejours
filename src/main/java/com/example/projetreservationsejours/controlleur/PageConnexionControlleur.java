@@ -115,6 +115,9 @@ public class PageConnexionControlleur extends Preloader implements Initializable
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        nomUtilisateur.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: #D3D3D3");
+        motDePasse.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: #D3D3D3");
+        pageConnexionStage.setStyle("-fx-background-color: #FFFFFF;");
+        boutonConnexion.setStyle("-fx-background-color: #800020; -fx-text-fill:#FFFFFF; -fx-border-radius: 30;-fx-background-radius: 30;-fx-border-color: #FFFFFF; -fx-arc-width: 30");
     }
 }

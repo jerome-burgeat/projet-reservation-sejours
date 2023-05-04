@@ -52,3 +52,18 @@
     -fx-border-color: #D3D3D3;
 }
 .choice-box > .label { -fx-text-fill: #800020; }
+
+.check-box .box {
+
+    -fx-background-color: white;
+    -fx-border-color:#D3D3D3;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: white;
+}
+
+.check-box:selected .box {
+
+    -fx-background-color: #800020;
+}
