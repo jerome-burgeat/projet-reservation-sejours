@@ -115,7 +115,7 @@ public class MainController implements Initializable {
         dateDebut.getEditor().setStyle("-fx-font-size: 18px; -fx-font-family: 'Perpetua';");
         dateFin.setStyle("-fx-background-color: #FFFFFF;");
         dateFin.getEditor().setStyle("-fx-font-size: 18px; -fx-font-family: 'Perpetua';");
-        viewMode.setStyle("-fx-background-color: #FFFFFF;-fx-font-size: 18px; -fx-font-family: 'Perpetua';\"");
+        viewMode.setStyle("-fx-background-color: #FFFFFF;-fx-font-size: 18px; -fx-font-family: 'Perpetua';");
         searchTextField.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: #D3D3D3");
         // Initialisation de la
         AllLocation allLocation = new AllLocation();
