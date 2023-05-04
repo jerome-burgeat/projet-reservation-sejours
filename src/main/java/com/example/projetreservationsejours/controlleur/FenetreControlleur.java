@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -45,6 +46,7 @@ public class FenetreControlleur {
         Parent root = new FXMLLoader(getClass().getResource(nomFenetre)).load();
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.getIcons().add(new Image(Application.class.getResourceAsStream("images/logo.png")));
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.setTitle(titreFenetre);
