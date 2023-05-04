@@ -88,7 +88,34 @@ public class ShoppingCardDetailsControlleur implements Initializable {
 
     @FXML
     void validerShoppingCard(MouseEvent event) {
-        System.out.println("je valide");
+        try {
+            AllLocationLoue allLocationLoue = new AllLocationLoue();
+            allLocationLoue.loadData("location_loue.csv", application.userConnected.getId());
+
+            AllLocationEnValidation allLocationEnValidation = new AllLocationEnValidation();
+            allLocationEnValidation.loadData("location_en_validation.csv");
+            int item = 1;
+            for (LocationLoue locationEnCours : allLocationLoue.getLocationList()) {
+                boolean isInLocationEnValidation = false;
+                for(int i=0; i < allLocationEnValidation.getLocationEnValidationList().size(); i++) {
+                    if(allLocationEnValidation.getLocationEnValidationList().get(i).getLocation_id() == locationEnCours.getLocation_id()
+                            && allLocationEnValidation.getLocationEnValidationList().get(i).getUser_id() == locationEnCours.getUser_id()) {
+                        isInLocationEnValidation = true;
+                    }
+                }
+                if(!isInLocationEnValidation) {
+                    allLocationEnValidation.addNewLocationLoueToCsv("location_en_validation.csv", locationEnCours);
+                    application.fenetreControlleur.showNotification("Validation", "Location n°"+ item +" validée", 2000, "images/Right.png");
+                    application.fenetreControlleur.changerDeFenetre("Accueil.fxml");
+                }
+                else {
+                    application.fenetreControlleur.showNotification("Alerte", " location n°"+ item + " a déjà été pris en compte", 2000, "images/Right.png");
+                }
+                item++;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
