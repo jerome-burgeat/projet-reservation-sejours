@@ -208,7 +208,7 @@ public class CardDetailsControlleur implements Initializable {
                 allLocationLoue.loadData("location_loue.csv");
                 boolean isHasAlready = false;
                 for(int i=0; i < allLocationLoue.howManyLocationLoue() && !isHasAlready; i++) {
-                    if(allLocationLoue.getLocationList().get(i).getLocation_id() == locationId
+                    if(allLocationLoue.getLocationList().get(i).getLocation_id() == locationId-1
                         && allLocationLoue.getLocationList().get(i).getUser_id() == application.userConnected.getId()) {
                         isHasAlready = true;
                     }
@@ -217,7 +217,7 @@ public class CardDetailsControlleur implements Initializable {
                     application.fenetreControlleur.showNotification("Alerte","Votre demande de location est en cours !",2000,"images/Right.png");
                 }
                 else {
-                    LocationLoue locationLoue = new LocationLoue(allLocationLoue.howManyLocationLoue() + 1, locationId, application.userConnected.getId());
+                    LocationLoue locationLoue = new LocationLoue(allLocationLoue.howManyLocationLoue() + 1, locationId-1, application.userConnected.getId());
                     allLocationLoue.addNewLocationLoueToCsv("location_loue.csv", locationLoue);
                     application.fenetreControlleur.showNotification("Alerte", "Location ajoutée au panier !", 2000, "images/Right.png");
                     application.fenetreControlleur.changerDeFenetre("Accueil.fxml");

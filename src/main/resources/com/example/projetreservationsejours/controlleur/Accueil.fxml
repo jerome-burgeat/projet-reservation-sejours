@@ -12,19 +12,26 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1536.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projetreservationsejours.controlleur.MainController">
+<Pane fx:id="mainPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1536.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projetreservationsejours.controlleur.MainController">
    <children>
-      <VBox prefHeight="790.0" prefWidth="1536.0">
+      <VBox fx:id="vboxPane" prefHeight="790.0" prefWidth="1536.0">
          <children>
             <HBox prefHeight="150.0" prefWidth="200.0">
                <children>
-                  <Pane prefHeight="150.0" prefWidth="1536.0">
+                  <Pane fx:id="headerPane" prefHeight="150.0" prefWidth="1536.0">
                      <children>
-                        <Button fx:id="boutonConnexion" layoutX="1304.0" layoutY="17.0" mnemonicParsing="false" onAction="#showPageConnexion" text="Se connecter" />
-                        <Button fx:id="bountonInscription" layoutX="1419.0" layoutY="17.0" mnemonicParsing="false" onAction="#showPageInscription" text="S'inscrire" />
-                        <ImageView fitHeight="114.0" fitWidth="274.0" layoutX="692.0" layoutY="-19.0" pickOnBounds="true" preserveRatio="true">
+                        <Button fx:id="boutonConnexion" layoutX="1252.0" layoutY="32.0" mnemonicParsing="false" onAction="#showPageConnexion" prefHeight="53.0" prefWidth="128.0" text="Se connecter">
+                           <font>
+                              <Font name="Perpetua" size="18.0" />
+                           </font></Button>
+                        <Button fx:id="bountonInscription" layoutX="1413.0" layoutY="32.0" mnemonicParsing="false" onAction="#showPageInscription" prefHeight="53.0" prefWidth="106.0" text="S'inscrire">
+                           <font>
+                              <Font name="Perpetua" size="18.0" />
+                           </font></Button>
+                        <ImageView fitHeight="300.0" fitWidth="250.0" layoutX="646.0" layoutY="-29.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/logo.png" />
                            </image>
@@ -55,24 +62,30 @@
                   </Pane>
                </children>
             </HBox>
-            <ScrollPane prefWidth="1536.0">
+            <ScrollPane fx:id="scrollPane" prefHeight="750.0" prefWidth="1525.0">
                <content>
-                  <FlowPane minHeight="-Infinity" prefWidth="1523.0">
+                  <FlowPane fx:id="flowPane" minHeight="-Infinity" prefWidth="1523.0">
                      <children>
-                        <HBox prefHeight="170.0" prefWidth="1536.0">
+                        <HBox fx:id="hboxPane" prefHeight="170.0" prefWidth="1536.0">
                            <children>
-                              <Pane prefHeight="119.0" prefWidth="1520.0">
+                              <Pane fx:id="researchPane" prefHeight="119.0" prefWidth="1520.0">
                                  <children>
-                                    <TextField fx:id="searchTextField" layoutX="118.0" layoutY="63.0" prefWidth="204.0" promptText="Destination" style="-fx-background-image: url('https://cdn-icons-png.flaticon.com/512/5219/5219383.png'); -fx-background-repeat: no-repeat; -fx-background-position: right center; -fx-background-size: 20px 20px;" />
-                                    <DatePicker fx:id="dateDebut" layoutX="525.0" layoutY="63.0" promptText="Arrivée" />
-                                    <DatePicker fx:id="dateFin" layoutX="891.0" layoutY="61.0" promptText="Départ" />
-                                    <ChoiceBox layoutX="1241.0" layoutY="61.0" prefWidth="150.0" />
-                                    <Button layoutX="767.0" layoutY="123.0" mnemonicParsing="false" onAction="#searchBar" text="Rechercher" />
+                                    <TextField fx:id="searchTextField" layoutX="184.0" layoutY="42.0" prefHeight="40.0" prefWidth="233.0" promptText="Destination" style="-fx-background-image: url('https://cdn-icons-png.flaticon.com/512/5219/5219383.png'); -fx-background-repeat: no-repeat; -fx-background-position: right center; -fx-background-size: 20px 20px;">
+                                       <font>
+                                          <Font name="Perpetua" size="18.0" />
+                                       </font></TextField>
+                                    <DatePicker fx:id="dateDebut" layoutX="522.0" layoutY="42.0" prefHeight="40.0" prefWidth="233.0" promptText="Arrivée" stylesheets="@CSS/Test.css" />
+                                    <DatePicker fx:id="dateFin" layoutX="891.0" layoutY="42.0" prefHeight="40.0" prefWidth="233.0" promptText="Départ" stylesheets="@CSS/Test.css" />
+                                    <ChoiceBox fx:id="viewMode" layoutX="1241.0" layoutY="42.0" prefHeight="40.0" prefWidth="206.0" stylesheets="@CSS/Test.css" />
+                                    <Button fx:id="boutonRecherche" layoutX="709.0" layoutY="107.0" mnemonicParsing="false" onAction="#searchBar" prefHeight="53.0" prefWidth="128.0" text="Rechercher">
+                                       <font>
+                                          <Font name="Perpetua" size="18.0" />
+                                       </font></Button>
                                  </children>
                               </Pane>
                            </children>
                         </HBox>
-                        <VBox alignment="CENTER" prefWidth="1520.0" spacing="20.0">
+                        <VBox fx:id="container" alignment="CENTER" prefWidth="1520.0" spacing="20.0">
                            <padding>
                               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                            </padding>
