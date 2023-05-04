@@ -11,14 +11,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import java.io.IOException;
 import java.net.URL;
@@ -31,6 +27,15 @@ import java.util.stream.Collectors;
 public class MainController implements Initializable {
 
     Application application;
+
+    @FXML
+    private Pane researchPane;
+
+    @FXML
+    private Pane headerPane;
+
+    @FXML
+    private ScrollPane scrollPane;
 
     @FXML
     private VBox cardContainer;
@@ -68,10 +73,50 @@ public class MainController implements Initializable {
     @FXML
     private Text userName;
 
+    @FXML
+    private HBox hboxPane;
+
+    @FXML
+    private VBox container;
+
+    @FXML
+    private FlowPane flowPane;
+
+    @FXML
+    private Button boutonRecherche;
+
+    @FXML
+    private Pane mainPane;
+
+    @FXML
+    private VBox vboxPane;
+
+    @FXML
+    private ChoiceBox<?> viewMode;
+
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 
         changeHeaderVisibility();
+        scrollPane.setStyle("-fx-background-color: #FFFFFF;");
+        cardContainer.setStyle("-fx-background-color: #FFFFFF;");
+        researchPane.setStyle("-fx-background-color: #FFFFFF;");
+        hboxPane.setStyle("-fx-background-color: #FFFFFF;");
+        container.setStyle("-fx-background-color: #FFFFFF;");
+        flowPane.setStyle("-fx-background-color: #FFFFFF;");
+        vboxPane.setStyle("-fx-background-color: #FFFFFF;");
+
+        headerPane.setStyle("-fx-background-color:#800020");
+        boutonConnexion.setStyle("-fx-background-color:#FECEA8; -fx-text-fill: #800020; -fx-border-radius: 30;-fx-background-radius: 30;-fx-border-color: #800020; -fx-arc-width: 30");
+        bountonInscription.setStyle("-fx-background-color:#FECEA8; -fx-text-fill: #800020; -fx-border-radius: 30;-fx-background-radius: 30;-fx-border-color: #800020; -fx-arc-width: 30");
+        boutonRecherche.setStyle("-fx-background-color: #800020; -fx-text-fill:#FFFFFF; -fx-border-radius: 30;-fx-background-radius: 30;-fx-border-color: #FFFFFF; -fx-arc-width: 30");
+        dateDebut.setStyle("-fx-background-color: #FFFFFF;");
+        dateDebut.getEditor().setStyle("-fx-font-size: 18px; -fx-font-family: 'Perpetua';");
+        dateFin.setStyle("-fx-background-color: #FFFFFF;");
+        dateFin.getEditor().setStyle("-fx-font-size: 18px; -fx-font-family: 'Perpetua';");
+        viewMode.setStyle("-fx-background-color: #FFFFFF;-fx-font-size: 18px; -fx-font-family: 'Perpetua';\"");
+        searchTextField.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: #D3D3D3");
         // Initialisation de la
         AllLocation allLocation = new AllLocation();
         try {
@@ -217,6 +262,8 @@ public class MainController implements Initializable {
 
     private void displayAllLocation(AllLocation allLocation) {
         int cpt = 0;
+        int total = 0;
+        int numberOfCardsPerRow = 5;
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.BASELINE_CENTER);
         for (Location card : allLocation.getLocationList()) {
@@ -227,10 +274,11 @@ public class MainController implements Initializable {
                 cardController.setCard(card);
                 hBox.getChildren().add(cardNode);
                 cpt++;
-                if((allLocation.getLocationList().size() < 3 && allLocation.getLocationList().size() == cpt)
-                    || cpt==3) {
+                total++;
+                if((allLocation.getLocationList().size() < numberOfCardsPerRow && allLocation.getLocationList().size() == cpt)
+                    || cpt==numberOfCardsPerRow || (allLocation.getLocationList().size()-total <= numberOfCardsPerRow && allLocation.getLocationList().lastIndexOf(card)==allLocation.getLocationList().size()-1)) {
                     cardContainer.getChildren().add(hBox);
-                    if(cpt==3) {
+                    if(cpt==numberOfCardsPerRow) {
                         cpt = 0;
                         hBox = new HBox();
                         hBox.setAlignment(Pos.BASELINE_CENTER);
