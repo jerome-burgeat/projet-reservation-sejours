@@ -36,28 +36,35 @@
                               <Image url="@images/logo.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="logout" fitHeight="23.0" fitWidth="42.0" layoutX="1485.0" layoutY="20.0" onMouseClicked="#logout" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="logout" fitHeight="35.0" fitWidth="30.0" layoutX="1489.0" layoutY="44.0" onMouseClicked="#logout" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@images/logout.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="user" fitHeight="23.0" fitWidth="42.0" layoutX="1349.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="user" fitHeight="35.0" fitWidth="35.0" layoutX="1331.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@images/user.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="shopping_cart" fitHeight="23.0" fitWidth="42.0" layoutX="1292.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="shopping_cart" fitHeight="35.0" fitWidth="35.0" layoutX="1266.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@images/shopping_basket.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="home" fitHeight="23.0" fitWidth="42.0" layoutX="1247.0" layoutY="18.0" onMouseClicked="#backHome" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="home" fitHeight="35.0" fitWidth="35.0" layoutX="1205.0" layoutY="42.0" onMouseClicked="#backHome" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@images/home.png" />
                            </image>
                         </ImageView>
-                        <Text fx:id="userName" layoutX="1386.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="53.9921875" />
-                        <Text fx:id="nbLocation" layoutX="1316.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="16.9921875" />
+                        <Text fx:id="userName" fill="WHITE" layoutX="1366.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="elodie13" wrappingWidth="128.00000000000023">
+                           <font>
+                              <Font name="Perpetua" size="18.0" />
+                           </font></Text>
+                        <Text fx:id="nbLocation" fill="WHITE" layoutX="1300.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="16.9921875">
+                           <font>
+                              <Font name="Perpetua" size="18.0" />
+                           </font>
+                        </Text>
                      </children>
                   </Pane>
                </children>
