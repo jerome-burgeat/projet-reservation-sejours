@@ -8,15 +8,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.StringConverter;
+import org.controlsfx.control.Rating;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,9 +31,6 @@ public class CardDetailsControlleur implements Initializable {
     Application application;
 
     AllUser users;
-
-    @FXML
-    private VBox comments;
 
     @FXML
     private Text dateDebut;
@@ -88,11 +88,63 @@ public class CardDetailsControlleur implements Initializable {
 
     private int locationId;
 
+    @FXML
+    private FlowPane flowPane;
+
+    @FXML
+    private HBox hboxPane;
+
+    @FXML
+    private HBox hboxPane2;
+
+    @FXML
+    private Pane headerPane;
+
+    @FXML
+    private Pane mainPane;
+
+    @FXML
+    private Pane pane2;
+
+    @FXML
+    private Pane pane3;
+
+    @FXML
+    private ScrollPane scrollPane;
+
+    @FXML
+    private VBox vBoxPane;
+
+    @FXML
+    private VBox vboxPane2;
+
+    @FXML
+    private VBox comments;
+
+    @FXML
+    private Button boutonAjoutPanier;
+
+    @FXML
+    private Button ajouterCommentaire;
+
+    private Rating rating = new Rating(5);;
+
+    private Rating addRatingComment;
+
+    private Location location;
+
+    private double globalNote;
+
+    private double totalNote;
+
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        defineBackground();
+        setRating();
         changeHeaderVisibility();
-
-        if(this.isUserConnected()) {
+        setTextAreaFormatting();
+        if (this.isUserConnected()) {
             userName.setText(application.userConnected.getUsername());
             AllLocationLoue allLocationLoue = new AllLocationLoue();
             try {
@@ -121,7 +173,20 @@ public class CardDetailsControlleur implements Initializable {
     }
 
     public void setCard(Location location) {
+        this.location = location;
+        image.setFitWidth(513);
+        image.setFitHeight(436);
+        image.setPreserveRatio(false);
         image.setImage(new Image(location.getUrlPhoto()));
+        BorderPane borderPane = new BorderPane(image);
+        borderPane.setStyle("-fx-border-color: #FECEA8; -fx-border-radius: 10; -fx-border-width: 2;");
+        Rectangle clipRect = new Rectangle(513,436);
+        clipRect.setArcWidth(12);
+        clipRect.setArcHeight(12);
+        image.setClip(clipRect);
+        borderPane.setCenter(image);
+        borderPane.setPrefSize(513, 436);
+        pane2.getChildren().add(borderPane);
         titre.setText(location.getTitle());
         dateDebut.setText(location.getStartDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         dateFin.setText(location.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
@@ -129,50 +194,6 @@ public class CardDetailsControlleur implements Initializable {
         lieu.setText(location.getLocation());
         nbMaxPersonne.setText(String.valueOf(location.getNumberOfPeople()));
         hote.setText(users.getUsers().get(Integer.parseInt(location.getHost_user_id())-1).getNom());
-        addCommentaire.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.ENTER)  {
-                    //Si l'utilisateur n'est pas connecté
-                    if(!isUserConnected()) {
-                        application.fenetreControlleur.showNotification("Alerte","Veuillez vous connecter !",2000,"images/Right.png");
-                    }
-                    //Si l'utilisateur est connecté
-                    else {
-                        String text = addCommentaire.getText();
-                        comments.getChildren().clear();
-
-                        AllCommentaire commentaireByLocationId = new AllCommentaire();
-
-                        try {
-                            commentaireByLocationId.loadData("commentaires.csv");
-                            Commentaire commentaire = new Commentaire(commentaireByLocationId.getCommentaireList().size(),
-                                    location.getId(), application.userConnected.getId(), text);
-                            commentaireByLocationId.getCommentaireList().clear();
-                            commentaireByLocationId.addNewCommentaireToCsv("commentaires.csv", commentaire);
-                            commentaireByLocationId.loadData("commentaires.csv", location.getId());
-                            commentaireByLocationId.displayCommentaireList();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-
-                        for (Commentaire response : commentaireByLocationId.getCommentaireList()) {
-                            try {
-                                FXMLLoader loader = new FXMLLoader(getClass().getResource("CommentaireTemplate.fxml"));
-                                AnchorPane cardNode = loader.load();
-                                CommentaireTemplateControlleur commentaireControlleur = loader.getController();
-                                commentaireControlleur.setCommentaire(users.getUsers().get(Integer.parseInt(String.valueOf(response.getUser_id() - 1))).getUsername(), response);
-                                comments.getChildren().add(cardNode);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        application.fenetreControlleur.showNotification("Commentaire","Votre commentaire est publié !",2000,"images/Right.png");
-                        addCommentaire.setText("");
-                    }
-                }
-            }
-        });
 
         AllCommentaire commentaireByLocationId = new AllCommentaire();
         try {
@@ -188,12 +209,15 @@ public class CardDetailsControlleur implements Initializable {
                 AnchorPane cardNode = loader.load();
                 CommentaireTemplateControlleur commentaireControlleur = loader.getController();
                 commentaireControlleur.setCommentaire(users.getUsers().get(Integer.parseInt(String.valueOf(response.getUser_id()-1))).getUsername(), response);
+                totalNote += response.getNote();
                 comments.getChildren().add(cardNode);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
+        globalNote = totalNote/commentaireByLocationId.getCommentaireList().size();
+        totalNote =0;
+        rating.setRating(globalNote);
         locationId = location.getId();
     }
 
@@ -281,4 +305,113 @@ public class CardDetailsControlleur implements Initializable {
      * @return boolean
      * */
     public boolean isUserConnected() { return application.userConnected != null; }
+
+    public void defineBackground(){
+        flowPane.setStyle("-fx-background-color: #FFFFFF;");
+        hboxPane.setStyle("-fx-background-color: #FFFFFF;");
+        hboxPane2.setStyle("-fx-background-color: #FFFFFF;");
+        mainPane.setStyle("-fx-background-color: #FFFFFF;");
+        pane2.setStyle("-fx-background-color: #FFFFFF;");
+        pane3.setStyle("-fx-background-color: #FFFFFF;");
+        scrollPane.setStyle("-fx-background-color: #FFFFFF;");
+        vBoxPane.setStyle("-fx-background-color: #FFFFFF;");
+        vboxPane2.setStyle("-fx-background-color: #FFFFFF;");
+        comments.setStyle("-fx-background-color: #FFFFFF;");
+        headerPane.setStyle("-fx-background-color:#800020");
+        boutonConnexion.setStyle("-fx-background-color:#FECEA8; -fx-text-fill: #800020; -fx-border-radius: 30;-fx-background-radius: 30;-fx-border-color: #800020; -fx-arc-width: 30");
+        bountonInscription.setStyle("-fx-background-color:#FECEA8; -fx-text-fill: #800020; -fx-border-radius: 30;-fx-background-radius: 30;-fx-border-color: #800020; -fx-arc-width: 30");
+        boutonAjoutPanier.setStyle("-fx-background-color: #800020; -fx-text-fill:#FFFFFF; -fx-border-radius: 30;-fx-background-radius: 30;-fx-border-color: #FFFFFF; -fx-arc-width: 30");
+        addCommentaire.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: #D3D3D3");
+        ajouterCommentaire.setStyle("-fx-background-color: #800020; -fx-text-fill:#FFFFFF; -fx-border-radius: 30;-fx-background-radius: 30;-fx-border-color: #FFFFFF; -fx-arc-width: 30");
+    }
+
+    public void setRating(){
+        //global rating of the location
+        rating.setPartialRating(true);
+        rating.setUpdateOnHover(false);
+        rating.setDisable(true);
+        rating.setLayoutX(1100);
+        rating.setLayoutY(70);
+        pane2.getChildren().add(rating);
+
+        //new rating for a new comment
+        addRatingComment = new Rating(5);
+        addRatingComment.setRating(0);
+        addRatingComment.setPartialRating(true);
+        addRatingComment.setUpdateOnHover(false);
+        addRatingComment.setLayoutX(550);
+        addRatingComment.setLayoutY(95);
+        addRatingComment.setPrefWidth(150);
+        pane3.getChildren().add(addRatingComment);
+
+    }
+
+    @FXML
+    void addComment(ActionEvent event) {
+        if(!isUserConnected()) {
+            application.fenetreControlleur.showNotification("Alerte","Veuillez vous connecter !",2000,"images/Right.png");
+        }
+        //Si l'utilisateur est connecté
+        else {
+            String text = addCommentaire.getText().replaceAll("\\r\\n|\\r|\\n", "|");
+            if(text.chars().filter(ch -> ch == '|').count()>3){
+                application.fenetreControlleur.showNotification("Erreur","Vos caractères font plus de quatre lignes",2000,"images/Wrong.png");
+            }
+            else {
+                comments.getChildren().clear();
+
+                AllCommentaire commentaireByLocationId = new AllCommentaire();
+
+                try {
+                    commentaireByLocationId.loadData("commentaires.csv");
+                    Commentaire commentaire = new Commentaire(commentaireByLocationId.getCommentaireList().size(), location.getId(), application.userConnected.getId(), text, addRatingComment.getRating());
+                    commentaireByLocationId.getCommentaireList().clear();
+                    commentaireByLocationId.addNewCommentaireToCsv("commentaires.csv", commentaire);
+                    commentaireByLocationId.loadData("commentaires.csv", location.getId());
+                    commentaireByLocationId.displayCommentaireList();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                for (Commentaire response : commentaireByLocationId.getCommentaireList()) {
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("CommentaireTemplate.fxml"));
+                        AnchorPane cardNode = loader.load();
+                        CommentaireTemplateControlleur commentaireControlleur = loader.getController();
+                        commentaireControlleur.setCommentaire(users.getUsers().get(Integer.parseInt(String.valueOf(response.getUser_id() - 1))).getUsername(), response);
+                        comments.getChildren().add(cardNode);
+                        totalNote += response.getNote();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                globalNote = totalNote / commentaireByLocationId.getCommentaireList().size();
+                rating.setRating(globalNote);
+                totalNote = 0;
+                application.fenetreControlleur.showNotification("Commentaire", "Votre commentaire est publié !", 2000, "images/Right.png");
+                addCommentaire.setText("");
+                addRatingComment.setRating(0);
+            }
+        }
+
+    }
+    public void setTextAreaFormatting(){
+        addCommentaire.setTextFormatter(new TextFormatter<>(change -> {
+            if (change.isAdded()) {
+                String newText = addCommentaire.getText().substring(0, change.getRangeStart()) + change.getText()
+                        + addCommentaire.getText().substring(change.getRangeEnd());
+                // Check if the width exceeds the maximum width and wrap to a new line
+                javafx.scene.text.Text text = new javafx.scene.text.Text(newText);
+                text.setFont(addCommentaire.getFont());
+                if (text.getLayoutBounds().getWidth() > 371) {
+                    int insertIndex = change.getRangeStart() + change.getText().length() - 1;
+                    String modifiedText = newText.substring(0, insertIndex) + "\n" + newText.substring(insertIndex);
+                    addCommentaire.setText(modifiedText);
+                    addCommentaire.positionCaret(modifiedText.length());
+                    return null;
+                }
+            }
+            return change;
+        }));
+    }
 }

@@ -19,6 +19,7 @@ Les fichiers ressources sont au nombre de 5. Nous allons expliquer le contenu de
     private int location_id;    // id de locations.csv
     private int user_id;        // id de utilisateurs.csv
     private String reponse;     // reponse de l'utilisateur pour une location
+    private double note;
 
 ### _location_en_validation.csv :_
     private int id;

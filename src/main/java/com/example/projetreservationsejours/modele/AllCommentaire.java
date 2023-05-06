@@ -1,9 +1,6 @@
 package com.example.projetreservationsejours.modele;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -59,12 +56,17 @@ public class AllCommentaire {
     public void addNewCommentaireToCsv(String filename,Commentaire commentaire) throws IOException {
         String pathRessources = "\\src\\main\\resources\\com\\example\\projetreservationsejours\\ressources\\";
         Path path = Paths.get(System.getProperty("user.dir")+ pathRessources + filename);
-        FileWriter writer = new FileWriter(path.toRealPath().toFile(), true);
-        String line = Integer.toString(commentaire.getId()) + ";"
-                + commentaire.getLocation_id() + ";"
-                + commentaire.getUser_id() + ";"
-                + commentaire.getReponse();
-        writer.append(line);
-        writer.close();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path.toRealPath().toFile(), true))) {
+            String line = Integer.toString(commentaire.getId()) + ";"
+                    + commentaire.getLocation_id() + ";"
+                    + commentaire.getUser_id() + ";"
+                    + commentaire.getReponse()+";"
+                    + commentaire.getNote();
+            writer.write(line);
+            writer.newLine();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

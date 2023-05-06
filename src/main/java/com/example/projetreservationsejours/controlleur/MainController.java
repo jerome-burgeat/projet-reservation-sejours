@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+
 import java.io.IOException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
@@ -93,7 +94,6 @@ public class MainController implements Initializable {
 
     @FXML
     private ChoiceBox<?> viewMode;
-
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {

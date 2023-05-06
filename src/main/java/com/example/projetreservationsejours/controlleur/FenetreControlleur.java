@@ -47,6 +47,8 @@ public class FenetreControlleur {
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.getIcons().add(new Image(Application.class.getResourceAsStream("images/logo.png")));
+        stage.setResizable(false);
+        stage.setIconified(false);
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.setTitle(titreFenetre);
