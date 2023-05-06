@@ -17,6 +17,7 @@ public class FenetreControlleur {
 
     Stage stagePrincipale;
     Scene scenePrincipale;
+    ImageView image;
 
     public FenetreControlleur() {
     }
@@ -55,25 +56,30 @@ public class FenetreControlleur {
         stage.show();
     }
 
-    public void showNotification(String title, String text,int milliSecs,String imagePath) {
-        ImageView image = new ImageView(Application.class.getResource(imagePath).toExternalForm());
-        image.setPreserveRatio(true);
-        image.setFitWidth(50);
-        image.setFitHeight(50);
+    public void showNotification(String title, String text,int milliSecs,String mode) {
         Notifications notification = Notifications.create();
         notification.hideAfter(new Duration(milliSecs));
         notification.title(title);
         notification.text(text);
+        if(mode.equals("warning")){
+            image = new ImageView(Application.class.getResource("images/Warning.png").toExternalForm());
+            image.setPreserveRatio(true);
+            image.setFitWidth(40);
+            image.setFitHeight(40);
+        } else if (mode.equals("success")) {
+            image = new ImageView(Application.class.getResource("images/Right.png").toExternalForm());
+            image.setPreserveRatio(true);
+            image.setFitWidth(50);
+            image.setFitHeight(50);
+        } else if (mode.equals("error")) {
+            image = new ImageView(Application.class.getResource("images/WrongNotification.png").toExternalForm());
+            image.setPreserveRatio(true);
+            image.setFitWidth(50);
+            image.setFitHeight(50);
+        }
         notification.graphic(image);
         notification.owner(getStagePrincipale());
-        if(title.equals("Alerte")) {
-            Platform.runLater(() -> notification.showWarning());
-        }
-        else if(title.equals("Erreur")) {
-            Platform.runLater(() -> notification.showError());
-        }
-        else {
-            Platform.runLater(() -> notification.show());
-        }
+        //getStagePrincipale().getScene().getStylesheets().add(Application.class.getResource("CSS/Test.css").toExternalForm());
+        Platform.runLater(() -> notification.show());
     }
 }

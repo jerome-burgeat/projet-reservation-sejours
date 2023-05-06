@@ -224,7 +224,7 @@ public class CardDetailsControlleur implements Initializable {
     @FXML
     void addToCart(MouseEvent event) {
         if(!isUserConnected()) {
-            application.fenetreControlleur.showNotification("Alerte","Veuillez vous connecter !",2000,"images/Right.png");
+            application.fenetreControlleur.showNotification("Alerte","Veuillez vous connecter !",2000,"warning");
         }
         else {
             try {
@@ -238,12 +238,12 @@ public class CardDetailsControlleur implements Initializable {
                     }
                 }
                 if(isHasAlready) {
-                    application.fenetreControlleur.showNotification("Alerte","Votre demande de location est en cours !",2000,"images/Right.png");
+                    application.fenetreControlleur.showNotification("Alerte","Votre demande de location est en cours !",2000,"warning");
                 }
                 else {
                     LocationLoue locationLoue = new LocationLoue(allLocationLoue.howManyLocationLoue() + 1, locationId-1, application.userConnected.getId());
                     allLocationLoue.addNewLocationLoueToCsv("location_loue.csv", locationLoue);
-                    application.fenetreControlleur.showNotification("Alerte", "Location ajoutée au panier !", 2000, "images/Right.png");
+                    application.fenetreControlleur.showNotification("Alerte", "Location ajoutée au panier !", 2000, "warning");
                     application.fenetreControlleur.changerDeFenetre("Accueil.fxml");
                 }
             } catch (IOException e) {
@@ -275,7 +275,7 @@ public class CardDetailsControlleur implements Initializable {
         application.userConnected = null;
         userName.setText("");
         changeHeaderVisibility();
-        application.fenetreControlleur.showNotification("Deconnexion","Vous êtes désormais déconnecté",2000,"images/Right.png");
+        application.fenetreControlleur.showNotification("Deconnexion","Vous êtes désormais déconnecté",2000,"success");
     }
 
     /**
@@ -349,13 +349,13 @@ public class CardDetailsControlleur implements Initializable {
     @FXML
     void addComment(ActionEvent event) {
         if(!isUserConnected()) {
-            application.fenetreControlleur.showNotification("Alerte","Veuillez vous connecter !",2000,"images/Right.png");
+            application.fenetreControlleur.showNotification("Alerte","Veuillez vous connecter !",2000,"warning");
         }
         //Si l'utilisateur est connecté
         else {
             String text = addCommentaire.getText().replaceAll("\\r\\n|\\r|\\n", "|");
             if(text.chars().filter(ch -> ch == '|').count()>3){
-                application.fenetreControlleur.showNotification("Erreur","Vos caractères font plus de quatre lignes",2000,"images/Wrong.png");
+                application.fenetreControlleur.showNotification("Erreur","Vos caractères font plus de quatre lignes",2000,"error");
             }
             else {
                 comments.getChildren().clear();
@@ -388,7 +388,7 @@ public class CardDetailsControlleur implements Initializable {
                 globalNote = totalNote / commentaireByLocationId.getCommentaireList().size();
                 rating.setRating(globalNote);
                 totalNote = 0;
-                application.fenetreControlleur.showNotification("Commentaire", "Votre commentaire est publié !", 2000, "images/Right.png");
+                application.fenetreControlleur.showNotification("Commentaire", "Votre commentaire est publié !", 2000, "success");
                 addCommentaire.setText("");
                 addRatingComment.setRating(0);
             }

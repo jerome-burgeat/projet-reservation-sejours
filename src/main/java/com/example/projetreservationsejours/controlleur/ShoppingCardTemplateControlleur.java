@@ -9,6 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
@@ -46,6 +49,9 @@ public class ShoppingCardTemplateControlleur {
     @FXML
     private Text titre;
 
+    @FXML
+    private Pane pane;
+
     public void setUserChoice(LocationLoue locationLoue) throws IOException {
         AllLocation allLocation = new AllLocation();
         allLocation.loadData("locations.csv");
@@ -54,12 +60,8 @@ public class ShoppingCardTemplateControlleur {
         users.loadData("utilisateurs.csv");
 
         Location currentLocation = allLocation.getLocationList().get(locationLoue.getLocation_id());
-
-        String url = "D:\\CoursAmphi\\MASTER\\S2\\Prototypage\\projet-reservation-sejours\\src\\main\\resources\\com\\example\\projetreservationsejours\\images\\Wrong.png";
-
-        delete.setImage(new Image(url));
         delete.setOnMouseClicked((MouseEvent event) -> {
-            application.fenetreControlleur.showNotification("Supprimer","Suppression en cours..",2000,"images/Right.png");
+            application.fenetreControlleur.showNotification("Supprimer","Suppression en cours..",2000,"success");
             AllLocationLoue allLocationLoue = new AllLocationLoue();
             try {
                 allLocationLoue.loadData("location_loue.csv");
@@ -69,8 +71,20 @@ public class ShoppingCardTemplateControlleur {
                 throw new RuntimeException(e);
             }
         });
-
+        image.setFitWidth(400);
+        image.setFitHeight(400);
+        image.setPreserveRatio(false);
         image.setImage(new Image(currentLocation.getUrlPhoto()));
+        BorderPane borderPane = new BorderPane(image);
+        borderPane.setStyle("-fx-border-color: #FECEA8; -fx-border-radius: 10; -fx-border-width: 2;");
+        Rectangle clipRect = new Rectangle(400,400);
+        clipRect.setArcWidth(12);
+        clipRect.setArcHeight(12);
+        image.setClip(clipRect);
+        borderPane.setCenter(image);
+        borderPane.setPrefSize(400, 400);
+        pane.getChildren().add(borderPane);
+
         image.setOnMouseClicked((MouseEvent event) -> {
             // Load the card details FXML file
             try {
@@ -97,7 +111,7 @@ public class ShoppingCardTemplateControlleur {
 
     @FXML
     void eraseChoice(MouseEvent event) {
-        application.fenetreControlleur.showNotification("Supprimer","Suppression en cours..",2000,"images/Right.png");
+        application.fenetreControlleur.showNotification("Supprimer","Suppression en cours..",2000,"success");
     }
 
 }

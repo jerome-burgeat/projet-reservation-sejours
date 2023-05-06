@@ -8,61 +8,76 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projetreservationsejours.controlleur.ShoppingCardDetailsControlleur">
+<Pane fx:id="mainPane" prefHeight="790.0" prefWidth="1536.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projetreservationsejours.controlleur.ShoppingCardDetailsControlleur">
    <children>
-      <VBox prefHeight="606.0" prefWidth="1042.0">
+      <VBox fx:id="vboxPane" prefHeight="790.0" prefWidth="1536.0">
          <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox fx:id="hboxPane" prefHeight="150.0" prefWidth="200.0">
                <children>
-                  <Pane prefHeight="63.0" prefWidth="1046.0">
+                  <Pane fx:id="headerPane" prefHeight="150.0" prefWidth="1536.0">
                      <children>
-                        <Button fx:id="boutonConnexion" layoutX="806.0" layoutY="19.0" mnemonicParsing="false" onAction="#showPageConnexion" text="Se connecter" />
-                        <Button fx:id="bountonInscription" layoutX="928.0" layoutY="19.0" mnemonicParsing="false" onAction="#showPageInscription" text="S'inscrire" />
-                        <ImageView fitHeight="114.0" fitWidth="274.0" layoutX="441.0" layoutY="-27.0" pickOnBounds="true" preserveRatio="true">
+                        <Button fx:id="boutonConnexion" layoutX="1252.0" layoutY="32.0" mnemonicParsing="false" onAction="#showPageConnexion" prefHeight="53.0" prefWidth="128.0" text="Se connecter">
+                           <font>
+                              <Font name="Perpetua" size="18.0" />
+                           </font></Button>
+                        <Button fx:id="bountonInscription" layoutX="1413.0" layoutY="32.0" mnemonicParsing="false" onAction="#showPageInscription" prefHeight="53.0" prefWidth="106.0" text="S'inscrire">
+                           <font>
+                              <Font name="Perpetua" size="18.0" />
+                           </font></Button>
+                        <ImageView fitHeight="300.0" fitWidth="250.0" layoutX="646.0" layoutY="-29.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/logo.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="logout" fitHeight="23.0" fitWidth="42.0" layoutX="1005.0" layoutY="20.0" onMouseClicked="#logout" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="logout" fitHeight="35.0" fitWidth="30.0" layoutX="1489.0" layoutY="44.0" onMouseClicked="#logout" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/logout.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="user" fitHeight="23.0" fitWidth="42.0" layoutX="917.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="user" fitHeight="35.0" fitWidth="35.0" layoutX="1331.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/user.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="shopping_cart" fitHeight="23.0" fitWidth="42.0" layoutX="867.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="shopping_cart" fitHeight="35.0" fitWidth="35.0" layoutX="1266.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/shopping_basket.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="home" fitHeight="23.0" fitWidth="42.0" layoutX="806.0" layoutY="20.0" onMouseClicked="#backHome" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="home" fitHeight="35.0" fitWidth="35.0" layoutX="1206.0" layoutY="42.0" onMouseClicked="#backHome" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/home.png" />
                            </image>
                         </ImageView>
-                        <Text fx:id="userName" layoutX="951.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="53.9921875" />
-                        <Text fx:id="nbLocation" layoutX="890.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="16.9921875" />
+                        <Text fx:id="userName" fill="WHITE" layoutX="1366.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="128.00000000000023">
+                           <font>
+                              <Font name="Perpetua" size="18.0" />
+                           </font></Text>
+                        <Text fx:id="nbLocation" fill="WHITE" layoutX="1300.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="16.9921875">
+                           <font>
+                              <Font name="Perpetua" size="18.0" />
+                           </font></Text>
                      </children>
                   </Pane>
                </children>
             </HBox>
-            <ScrollPane prefHeight="580.0" prefWidth="1042.0">
+            <ScrollPane fx:id="scrollPane" prefHeight="750.0" prefWidth="1526.0">
                <content>
-                  <FlowPane prefHeight="722.0" prefWidth="1020.0">
+                  <FlowPane fx:id="flowPane" prefWidth="1523.0">
                      <children>
-                        <HBox prefHeight="64.0" prefWidth="1022.0" />
-                        <HBox prefHeight="752.0" prefWidth="1023.0">
+                        <HBox fx:id="hboxPane2" prefWidth="1536.0">
                            <children>
-                              <VBox fx:id="userChoice1" prefHeight="752.0" prefWidth="168.0" />
-                              <VBox fx:id="userChoice" prefHeight="752.0" prefWidth="647.0" />
-                              <Pane prefHeight="442.0" prefWidth="199.0">
+                              <VBox fx:id="userChoice1" prefWidth="350.0" />
+                              <VBox fx:id="userChoice" prefWidth="1000.0" />
+                              <Pane fx:id="pane" prefWidth="180.0">
                                  <children>
-                                    <Button layoutX="49.0" layoutY="21.0" mnemonicParsing="false" onMouseClicked="#validerShoppingCard" text="Valider le panier" />
+                                    <Button fx:id="boutonValiderPanier" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onMouseClicked="#validerShoppingCard" prefHeight="53.0" prefWidth="150.0" text="Valider le panier">
+                                       <font>
+                                          <Font name="Perpetua" size="18.0" />
+                                       </font></Button>
                                  </children>
                               </Pane>
                            </children>

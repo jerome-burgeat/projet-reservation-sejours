@@ -9,15 +9,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
@@ -51,13 +50,46 @@ public class ShoppingCardDetailsControlleur implements Initializable {
     private ImageView user;
 
     @FXML
+    private Text userName;
+
+    @FXML
+    private FlowPane flowPane;
+
+    @FXML
+    private HBox hboxPane;
+
+    @FXML
+    private HBox hboxPane2;
+
+    @FXML
+    private Pane headerPane;
+
+    @FXML
     private VBox userChoice;
 
     @FXML
-    private Text userName;
+    private Pane mainPane;
+
+    @FXML
+    private Pane pane;
+
+    @FXML
+    private ScrollPane scrollPane;
+
+    @FXML
+    private VBox userChoice1;
+
+    @FXML
+    private VBox vboxPane;
+
+    @FXML
+    private Button boutonValiderPanier;
+
+
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        setBackground();
         changeHeaderVisibility();
 
         userName.setText(application.userConnected.getUsername());
@@ -105,11 +137,11 @@ public class ShoppingCardDetailsControlleur implements Initializable {
                 }
                 if(!isInLocationEnValidation) {
                     allLocationEnValidation.addNewLocationLoueToCsv("location_en_validation.csv", locationEnCours);
-                    application.fenetreControlleur.showNotification("Validation", "Location n°"+ item +" validée", 2000, "images/Right.png");
+                    application.fenetreControlleur.showNotification("Validation", "Location n°"+ item +" validée", 2000, "success");
                     application.fenetreControlleur.changerDeFenetre("Accueil.fxml");
                 }
                 else {
-                    application.fenetreControlleur.showNotification("Alerte", " location n°"+ item + " a déjà été pris en compte", 2000, "images/Right.png");
+                    application.fenetreControlleur.showNotification("Alerte", " location n°"+ item + " a déjà été pris en compte", 2000, "warning");
                 }
                 item++;
             }
@@ -141,7 +173,7 @@ public class ShoppingCardDetailsControlleur implements Initializable {
         application.userConnected = null;
         userName.setText("");
         changeHeaderVisibility();
-        application.fenetreControlleur.showNotification("Deconnexion","Vous êtes désormais déconnecté",2000,"images/Right.png");
+        application.fenetreControlleur.showNotification("Deconnexion","Vous êtes désormais déconnecté",2000,"success");
         try {
             application.fenetreControlleur.changerDeFenetre("Accueil.fxml");
         } catch (IOException e) {
@@ -176,4 +208,20 @@ public class ShoppingCardDetailsControlleur implements Initializable {
      * @return boolean
      * */
     public boolean isUserConnected() { return application.userConnected != null; }
+
+    public void setBackground(){
+        flowPane.setStyle("-fx-background-color: #FFFFFF;");
+        hboxPane.setStyle("-fx-background-color: #FFFFFF;");
+        hboxPane2.setStyle("-fx-background-color: #FFFFFF;");
+        userChoice.setStyle("-fx-background-color: #FFFFFF;");
+        mainPane.setStyle("-fx-background-color: #FFFFFF;");
+        pane.setStyle("-fx-background-color: #FFFFFF;");
+        scrollPane.setStyle("-fx-background-color: #FFFFFF;");
+        userChoice1.setStyle("-fx-background-color: #FFFFFF;");
+        vboxPane.setStyle("-fx-background-color: #FFFFFF;");
+        headerPane.setStyle("-fx-background-color:#800020");
+        boutonConnexion.setStyle("-fx-background-color:#FECEA8; -fx-text-fill: #800020; -fx-border-radius: 30;-fx-background-radius: 30;-fx-border-color: #800020; -fx-arc-width: 30");
+        bountonInscription.setStyle("-fx-background-color:#FECEA8; -fx-text-fill: #800020; -fx-border-radius: 30;-fx-background-radius: 30;-fx-border-color: #800020; -fx-arc-width: 30");
+        boutonValiderPanier.setStyle("-fx-background-color: #800020; -fx-text-fill:#FFFFFF; -fx-border-radius: 30;-fx-background-radius: 30;-fx-border-color: #FFFFFF; -fx-arc-width: 30");
+    }
 }
