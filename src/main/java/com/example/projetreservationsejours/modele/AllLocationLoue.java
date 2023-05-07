@@ -1,6 +1,7 @@
 package com.example.projetreservationsejours.modele;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.format.DateTimeFormatter;
@@ -75,6 +76,26 @@ public class AllLocationLoue {
 
         inputFile.delete();
         tempFile.renameTo(inputFile);
+    }
+
+    public void approuveLocationToCsv(String filename,LocationEnValidation locationEnValidation) throws IOException {
+        String pathRessources = "\\src\\main\\resources\\com\\example\\projetreservationsejours\\ressources\\";
+        Path path = Paths.get(System.getProperty("user.dir")+ pathRessources + filename);
+        //Modification dans location_en_cours.csv
+        List<String> lines = Files.readAllLines(path);
+        for (int i = 0; i < lines.size(); i++) {
+            String line = lines.get(i);
+            String[] values = line.split(";");
+            int locationId = Integer.parseInt(values[1].trim());
+            int UserWhoWantToDoLocationId = Integer.parseInt(values[2].trim());
+            if (locationId == locationEnValidation.getLocation_id() && UserWhoWantToDoLocationId == locationEnValidation.getUser_id()) {
+                values[3] = "1";
+                line = String.join(";", values);
+                lines.set(i, line);
+                break;
+            }
+        }
+        Files.write(path, lines);
     }
 
     public List<LocationLoue> getLocationList() {

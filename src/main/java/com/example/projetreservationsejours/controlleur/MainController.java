@@ -125,6 +125,61 @@ public class MainController implements Initializable {
             throw new RuntimeException(e);
         }
 
+        /*searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue.length() >= 2) {
+                cardContainer.getChildren().clear();
+                if (allLocation.getLocationList().isEmpty()) {
+                    if (searchTextField.getText().equals("")) {
+                        try {
+                            allLocation.loadData("locations.csv");
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        allLocation.displayLocationList();
+
+                        if (this.isUserConnected()) {
+                            userName.setText(application.userConnected.getUsername());
+                            AllLocationLoue allLocationLoue = new AllLocationLoue();
+                            try {
+                                allLocationLoue.loadData("location_loue.csv", application.userConnected.getId());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            nbLocation.setText(String.valueOf(allLocationLoue.howManyLocationLoue()));
+                        }
+                        displayAllLocation(allLocation);
+                    } else {
+                        HBox hBox = new HBox();
+                        hBox.setAlignment(Pos.BASELINE_CENTER);
+                        hBox.getChildren().add(new Text("La recherche n'a pas aboutie"));
+                        cardContainer.getChildren().add(hBox);
+                    }
+
+                } else {
+                    if (searchTextField.getText().equals("")) {
+                        try {
+                            allLocation.loadData("locations.csv");
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        allLocation.displayLocationList();
+
+                        if (this.isUserConnected()) {
+                            userName.setText(application.userConnected.getUsername());
+                            AllLocationLoue allLocationLoue = new AllLocationLoue();
+                            try {
+                                allLocationLoue.loadData("location_loue.csv", application.userConnected.getId());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            nbLocation.setText(String.valueOf(allLocationLoue.howManyLocationLoue()));
+                        }
+                    }
+                    displayAllLocation(allLocation);
+                }
+            }
+        });*/
+
         if(this.isUserConnected()) {
             userName.setText(application.userConnected.getUsername());
             AllLocationLoue allLocationLoue = new AllLocationLoue();
@@ -138,6 +193,14 @@ public class MainController implements Initializable {
             shopping_cart.setOnMouseClicked(event -> {
                 try {
                     application.fenetreControlleur.changerDeFenetre("ShoppingCardDetails.fxml");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+            user.setOnMouseClicked(event -> {
+                try {
+                    application.fenetreControlleur.changerDeFenetre("HostCardDetails.fxml");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

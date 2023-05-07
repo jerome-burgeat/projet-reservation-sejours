@@ -46,12 +46,12 @@ public class AllLocation {
     public void loadData(String filename, String country) throws IOException {
         String pathRessources = "\\src\\main\\resources\\com\\example\\projetreservationsejours\\ressources\\";
         Path path = Paths.get(System.getProperty("user.dir")+ pathRessources + filename);
+        String regex = "^.*" + country + ".*$";
         try (BufferedReader reader = new BufferedReader(new FileReader(path.toRealPath().toFile()))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 Location location = Location.fromCsv(line);
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                if(location.getLocation().equals(country)) {
+                if(location.getLocation().matches(regex)) {
                     locationList.add(location);
                 }
             }
@@ -61,12 +61,15 @@ public class AllLocation {
     public void loadData(String filename, String country, String dateDebut, String dateFin) throws IOException {
         String pathRessources = "\\src\\main\\resources\\com\\example\\projetreservationsejours\\ressources\\";
         Path path = Paths.get(System.getProperty("user.dir")+ pathRessources + filename);
+        String regex = "^.*" + country + ".*$";
+        String regexDebut = "^.*" + dateDebut + ".*$";
+        String regexFin = "^.*" + dateFin + ".*$";
         try (BufferedReader reader = new BufferedReader(new FileReader(path.toRealPath().toFile()))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 Location location = Location.fromCsv(line);
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                if(location.getLocation().equals(country) && location.getStartDate().format(formatter).equals(dateDebut) && location.getEndDate().format(formatter).equals(dateFin)) {
+                if(location.getLocation().matches(regex) && location.getStartDate().format(formatter).matches(regexDebut) && location.getEndDate().format(formatter).matches(regexFin)) {
                     locationList.add(location);
                 }
             }
