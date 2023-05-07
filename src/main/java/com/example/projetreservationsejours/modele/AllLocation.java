@@ -51,7 +51,10 @@ public class AllLocation {
             String line;
             while ((line = reader.readLine()) != null) {
                 Location location = Location.fromCsv(line);
-                if(location.getLocation().matches(regex)) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                if(location.getLocation().matches(regex) || location.getStartDate().format(formatter).matches(regex) || location.getEndDate().format(formatter).matches(regex)
+                || location.getHost_user_id().matches(regex) || String.valueOf(location.getNumberOfPeople()).matches(regex)
+                || location.getTitle().matches(regex) || String.valueOf(location.getPrice()).matches(regex)) {
                     locationList.add(location);
                 }
             }

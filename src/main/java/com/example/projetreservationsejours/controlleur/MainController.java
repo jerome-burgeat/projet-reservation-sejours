@@ -2,10 +2,9 @@ package com.example.projetreservationsejours.controlleur;
 
 import com.example.projetreservationsejours.Application;
 
-import com.example.projetreservationsejours.modele.AllLocation;
-import com.example.projetreservationsejours.modele.AllLocationLoue;
-import com.example.projetreservationsejours.modele.AllUser;
-import com.example.projetreservationsejours.modele.Location;
+import com.example.projetreservationsejours.modele.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -93,7 +92,9 @@ public class MainController implements Initializable {
     private VBox vboxPane;
 
     @FXML
-    private ChoiceBox<?> viewMode;
+    private ChoiceBox viewMode;
+
+    ObservableList<String> options = FXCollections.observableArrayList("Toutes les demandes","Mes locations");
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -117,10 +118,12 @@ public class MainController implements Initializable {
         dateFin.getEditor().setStyle("-fx-font-size: 18px; -fx-font-family: 'Perpetua';");
         viewMode.setStyle("-fx-background-color: #FFFFFF;-fx-font-size: 18px; -fx-font-family: 'Perpetua';");
         searchTextField.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: #D3D3D3");
-        // Initialisation de la
+        // Initialisation des locations
         AllLocation allLocation = new AllLocation();
         try {
             allLocation.loadDataAvailable("locations.csv", true);
+            viewMode.setValue(options.get(0));
+            viewMode.setItems(options);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -182,6 +185,7 @@ public class MainController implements Initializable {
 
         if(this.isUserConnected()) {
             userName.setText(application.userConnected.getUsername());
+            viewMode.setDisable(false);
             AllLocationLoue allLocationLoue = new AllLocationLoue();
             try {
                 allLocationLoue.loadData("location_loue.csv", application.userConnected.getId());
@@ -205,6 +209,9 @@ public class MainController implements Initializable {
                     throw new RuntimeException(e);
                 }
             });
+        }
+        else {
+            viewMode.setDisable(true);
         }
 
         displayAllLocation(allLocation);
@@ -238,6 +245,15 @@ public class MainController implements Initializable {
             userName.setText(application.userConnected.getUsername());
         }
 
+        /*if (viewMode.getValue().equals(options.get(1))) {
+            for (int i=0; i < allLocation.getLocationList().size(); i++) {
+                if(Integer.parseInt(allLocation.getLocationList().get(i).getHost_user_id()) != this.application.userConnected.getId()) {
+                    allLocation.getLocationList().remove(i);
+                }
+            }
+        }*/
+        //nbLocation.setText(String.valueOf(allLocationEnValidation.howManyLocationLoue()));
+
         cardContainer.getChildren().clear();
         if (allLocation.getLocationList().isEmpty()) {
             HBox hBox = new HBox();
@@ -248,11 +264,11 @@ public class MainController implements Initializable {
         else {
             if(searchTextField.getText().equals("")) {
                 try {
+                    allLocation.getLocationList().clear();
                     allLocation.loadData("locations.csv");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                allLocation.displayLocationList();
 
                 if (this.isUserConnected()) {
                     userName.setText(application.userConnected.getUsername());
@@ -261,6 +277,15 @@ public class MainController implements Initializable {
                     nbLocation.setText(String.valueOf(allLocationLoue.howManyLocationLoue()));
                 }
             }
+           if (viewMode.getValue().equals(options.get(1))) {
+                for(int i=0; i < allLocation.getLocationList().size(); i++) {
+                    if(!allLocation.getLocationList().get(i).getHost_user_id().equals(String.valueOf(this.application.userConnected.getId()))) {
+                        allLocation.getLocationList().remove(i);
+                        i--;
+                    }
+                }
+            }
+            allLocation.displayLocationList();
             displayAllLocation(allLocation);
         }
     }
@@ -288,11 +313,12 @@ public class MainController implements Initializable {
      * Reset the status of the user connected
      * */
     @FXML
-    void logout(MouseEvent event) {
+    void logout(MouseEvent event) throws IOException {
         application.userConnected = null;
         userName.setText("");
         changeHeaderVisibility();
         application.fenetreControlleur.showNotification("Deconnexion","Vous êtes désormais déconnecté",2000,"success");
+        application.fenetreControlleur.changerDeFenetre("Accueil.fxml");
     }
 
     /**
@@ -338,10 +364,10 @@ public class MainController implements Initializable {
                 hBox.getChildren().add(cardNode);
                 cpt++;
                 total++;
-                if((allLocation.getLocationList().size() < numberOfCardsPerRow && allLocation.getLocationList().size() == cpt)
-                    || cpt==numberOfCardsPerRow || (allLocation.getLocationList().size()-total <= numberOfCardsPerRow && allLocation.getLocationList().lastIndexOf(card)==allLocation.getLocationList().size()-1)) {
+                if ((allLocation.getLocationList().size() < numberOfCardsPerRow && allLocation.getLocationList().size() == cpt)
+                        || cpt == numberOfCardsPerRow || (allLocation.getLocationList().size() - total <= numberOfCardsPerRow && allLocation.getLocationList().lastIndexOf(card) == allLocation.getLocationList().size() - 1)) {
                     cardContainer.getChildren().add(hBox);
-                    if(cpt==numberOfCardsPerRow) {
+                    if (cpt == numberOfCardsPerRow) {
                         cpt = 0;
                         hBox = new HBox();
                         hBox.setAlignment(Pos.BASELINE_CENTER);
