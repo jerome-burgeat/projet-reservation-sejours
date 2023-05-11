@@ -1,6 +1,7 @@
 package com.example.projetreservationsejours.controlleur;
 
 import com.example.projetreservationsejours.Application;
+import com.example.projetreservationsejours.modele.ImageCache;
 import com.example.projetreservationsejours.modele.Location;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,11 +35,11 @@ public class CardTemplateControlleur {
     private AnchorPane anchorPane;
 
 
-    public void setCard(Location location) {
+    public void setCard(Location location, ImageCache imageCache) {
         image.setFitWidth(230);
         image.setFitHeight(150);
         image.setPreserveRatio(false);
-        image.setImage(new Image(Application.class.getResource("imagesLocations/"+location.getUrlPhoto()).toExternalForm()));
+        image.setImage(imageCache.getImage(Application.class.getResource("imagesLocations/"+location.getUrlPhoto()).toExternalForm()));
         BorderPane borderPane = new BorderPane(image);
         borderPane.setStyle("-fx-border-color: #FECEA8; -fx-border-radius: 10; -fx-border-width: 2;");
         Rectangle clipRect = new Rectangle(230, 150);

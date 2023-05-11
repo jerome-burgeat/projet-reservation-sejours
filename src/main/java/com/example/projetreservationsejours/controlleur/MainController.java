@@ -3,6 +3,7 @@ package com.example.projetreservationsejours.controlleur;
 import com.example.projetreservationsejours.Application;
 
 import com.example.projetreservationsejours.modele.*;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,7 +22,10 @@ import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class MainController implements Initializable {
@@ -365,32 +369,61 @@ public class MainController implements Initializable {
     public boolean isUserConnected() { return application.userConnected != null; }
 
     private void displayAllLocation(AllLocation allLocation) {
-        int cpt = 0;
-        int total = 0;
-        int numberOfCardsPerRow = 5;
-        HBox hBox = new HBox();
-        hBox.setAlignment(Pos.BASELINE_CENTER);
-        for (Location card : allLocation.getLocationList()) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("cardTemplate.fxml"));
-                AnchorPane cardNode = loader.load();
-                CardTemplateControlleur cardController = loader.getController();
-                cardController.setCard(card);
-                hBox.getChildren().add(cardNode);
-                cpt++;
-                total++;
-                if ((allLocation.getLocationList().size() < numberOfCardsPerRow && allLocation.getLocationList().size() == cpt)
-                        || cpt == numberOfCardsPerRow || (allLocation.getLocationList().size() - total <= numberOfCardsPerRow && allLocation.getLocationList().lastIndexOf(card) == allLocation.getLocationList().size() - 1)) {
-                    cardContainer.getChildren().add(hBox);
-                    if (cpt == numberOfCardsPerRow) {
-                        cpt = 0;
-                        hBox = new HBox();
-                        hBox.setAlignment(Pos.BASELINE_CENTER);
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+        ImageCache imageCache = new ImageCache();
+        final int numberOfCardsPerRow = 5;
+        ExecutorService executor = Executors.newFixedThreadPool(numberOfCardsPerRow);
+
+        List<Location> locationList = allLocation.getLocationList();
+        int totalLocations = locationList.size();
+        int batchSize = numberOfCardsPerRow;
+
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+            int currentIndex = 0;
+            while (currentIndex < totalLocations) {
+                List<Location> batch = locationList.subList(currentIndex, Math.min(currentIndex + batchSize, totalLocations));
+                currentIndex += batchSize;
+
+                List<CompletableFuture<AnchorPane>> cardNodeFutures = batch.stream()
+                        .map(location -> CompletableFuture.supplyAsync(() -> {
+                            try {
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource("cardTemplate.fxml"));
+                                AnchorPane cardNode = loader.load();
+                                CardTemplateControlleur cardController = loader.getController();
+                                cardController.setCard(location,imageCache);
+                                return cardNode;
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                return null;
+                            }
+                        }, executor))
+                        .collect(Collectors.toList());
+
+                CompletableFuture<Void> batchFuture = CompletableFuture.allOf(cardNodeFutures.toArray(new CompletableFuture[0]))
+                        .thenApplyAsync(__ -> {
+                            List<AnchorPane> cardNodes = cardNodeFutures.stream()
+                                    .map(CompletableFuture::join)
+                                    .filter(Objects::nonNull)
+                                    .collect(Collectors.toList());
+
+                            Platform.runLater(() -> {
+                                HBox hBox = new HBox();
+                                hBox.setAlignment(Pos.BASELINE_CENTER);
+                                hBox.getChildren().addAll(cardNodes);
+                                cardContainer.getChildren().add(hBox);
+                            });
+
+                            return null;
+                        }, Platform::runLater);
+
+                batchFuture.join();
             }
+        }, executor);
+
+        future.whenComplete((__, throwable) -> executor.shutdown());
+        try {
+            future.get(3, TimeUnit.SECONDS);
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            e.printStackTrace();
         }
     }
 }
