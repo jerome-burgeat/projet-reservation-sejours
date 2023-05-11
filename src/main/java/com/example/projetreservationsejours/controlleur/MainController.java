@@ -128,44 +128,50 @@ public class MainController implements Initializable {
             throw new RuntimeException(e);
         }
 
-        /*searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue.length() >= 2) {
+                allLocation.getLocationList().clear();
+                try {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    if(dateDebut.getValue() == null) {
+                        allLocation.loadData("locations.csv", newValue);
+                    }
+                    else {
+                        allLocation.loadData("locations.csv", newValue, dateDebut.getValue().format(formatter), dateFin.getValue().format(formatter));
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                //allLocation.displayLocationList();
+
+                if(this.isUserConnected()) {
+                    userName.setText(application.userConnected.getUsername());
+                }
+
+        /*if (viewMode.getValue().equals(options.get(1))) {
+            for (int i=0; i < allLocation.getLocationList().size(); i++) {
+                if(Integer.parseInt(allLocation.getLocationList().get(i).getHost_user_id()) != this.application.userConnected.getId()) {
+                    allLocation.getLocationList().remove(i);
+                }
+            }
+        }*/
+                //nbLocation.setText(String.valueOf(allLocationEnValidation.howManyLocationLoue()));
+
                 cardContainer.getChildren().clear();
                 if (allLocation.getLocationList().isEmpty()) {
-                    if (searchTextField.getText().equals("")) {
+                    HBox hBox = new HBox();
+                    hBox.setAlignment(Pos.BASELINE_CENTER);
+                    hBox.getChildren().add(new Text("La recherche n'a pas aboutie"));
+                    cardContainer.getChildren().add(hBox);
+                }
+                else {
+                    if(searchTextField.getText().equals("")) {
                         try {
+                            allLocation.getLocationList().clear();
                             allLocation.loadData("locations.csv");
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
-                        allLocation.displayLocationList();
-
-                        if (this.isUserConnected()) {
-                            userName.setText(application.userConnected.getUsername());
-                            AllLocationLoue allLocationLoue = new AllLocationLoue();
-                            try {
-                                allLocationLoue.loadData("location_loue.csv", application.userConnected.getId());
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                            nbLocation.setText(String.valueOf(allLocationLoue.howManyLocationLoue()));
-                        }
-                        displayAllLocation(allLocation);
-                    } else {
-                        HBox hBox = new HBox();
-                        hBox.setAlignment(Pos.BASELINE_CENTER);
-                        hBox.getChildren().add(new Text("La recherche n'a pas aboutie"));
-                        cardContainer.getChildren().add(hBox);
-                    }
-
-                } else {
-                    if (searchTextField.getText().equals("")) {
-                        try {
-                            allLocation.loadData("locations.csv");
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        allLocation.displayLocationList();
 
                         if (this.isUserConnected()) {
                             userName.setText(application.userConnected.getUsername());
@@ -178,10 +184,19 @@ public class MainController implements Initializable {
                             nbLocation.setText(String.valueOf(allLocationLoue.howManyLocationLoue()));
                         }
                     }
+                    if (viewMode.getValue().equals(options.get(1))) {
+                        for(int i=0; i < allLocation.getLocationList().size(); i++) {
+                            if(!allLocation.getLocationList().get(i).getHost_user_id().equals(String.valueOf(this.application.userConnected.getId()))) {
+                                allLocation.getLocationList().remove(i);
+                                i--;
+                            }
+                        }
+                    }
+                    allLocation.displayLocationList();
                     displayAllLocation(allLocation);
                 }
             }
-        });*/
+        });
 
         if(this.isUserConnected()) {
             userName.setText(application.userConnected.getUsername());

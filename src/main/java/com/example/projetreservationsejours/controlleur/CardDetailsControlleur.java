@@ -170,6 +170,14 @@ public class CardDetailsControlleur implements Initializable {
                 throw new RuntimeException(e);
             }
         });
+
+        user.setOnMouseClicked(event -> {
+            try {
+                application.fenetreControlleur.changerDeFenetre("HostCardDetails.fxml");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public void setCard(Location location) {

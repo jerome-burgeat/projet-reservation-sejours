@@ -95,7 +95,17 @@ public class HostCardDetailsControlleur implements Initializable {
         setBackground();
         changeHeaderVisibility();
 
-        userName.setText(application.userConnected.getUsername());
+        if (this.isUserConnected()) {
+            userName.setText(application.userConnected.getUsername());
+            AllLocationLoue allLocationLoue = new AllLocationLoue();
+            try {
+                allLocationLoue.loadData("location_loue.csv", application.userConnected.getId());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            nbLocation.setText(String.valueOf(allLocationLoue.howManyLocationLoue()));
+        }
+
         AllLocationEnValidation allLocationEnValidation = new AllLocationEnValidation();
         try {
             viewHostMode.setValue(options.get(0));
@@ -122,6 +132,18 @@ public class HostCardDetailsControlleur implements Initializable {
                 e.printStackTrace();
             }
         }
+
+        shopping_cart.setOnMouseClicked(event -> {
+            try {
+                application.fenetreControlleur.changerDeFenetre("ShoppingCardDetails.fxml");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        user.setOnMouseClicked(event -> {
+            application.fenetreControlleur.showNotification("Alerte", "Vous êtes déjà dans la bonne fenêtre", 2000, "warning");
+        });
     }
 
     /*public void setUserChoiceCard(Location location) {
@@ -190,7 +212,16 @@ public class HostCardDetailsControlleur implements Initializable {
     @FXML
     void search(ActionEvent event) throws IOException {
         userChoice.getChildren().clear();
-        userName.setText(application.userConnected.getUsername());
+        if (this.isUserConnected()) {
+            userName.setText(application.userConnected.getUsername());
+            AllLocationLoue allLocationLoue = new AllLocationLoue();
+            try {
+                allLocationLoue.loadData("location_loue.csv", application.userConnected.getId());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            nbLocation.setText(String.valueOf(allLocationLoue.howManyLocationLoue()));
+        }
         AllLocationEnValidation allLocationEnValidation = new AllLocationEnValidation();
         try {
             if(viewHostMode.getValue().equals(options.get(0))) {
