@@ -74,7 +74,7 @@ public class ShoppingCardTemplateControlleur {
         image.setFitWidth(400);
         image.setFitHeight(400);
         image.setPreserveRatio(false);
-        image.setImage(new Image(currentLocation.getUrlPhoto()));
+        image.setImage(new Image(Application.class.getResource("imagesLocations/"+ currentLocation.getUrlPhoto()).toExternalForm()));
         BorderPane borderPane = new BorderPane(image);
         borderPane.setStyle("-fx-border-color: #FECEA8; -fx-border-radius: 10; -fx-border-width: 2;");
         Rectangle clipRect = new Rectangle(400,400);

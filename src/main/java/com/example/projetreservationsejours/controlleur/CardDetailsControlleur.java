@@ -177,7 +177,7 @@ public class CardDetailsControlleur implements Initializable {
         image.setFitWidth(513);
         image.setFitHeight(436);
         image.setPreserveRatio(false);
-        image.setImage(new Image(location.getUrlPhoto()));
+        image.setImage(new Image(Application.class.getResource("imagesLocations/"+location.getUrlPhoto()).toExternalForm()));
         BorderPane borderPane = new BorderPane(image);
         borderPane.setStyle("-fx-border-color: #FECEA8; -fx-border-radius: 10; -fx-border-width: 2;");
         Rectangle clipRect = new Rectangle(513,436);
