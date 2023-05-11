@@ -2,6 +2,8 @@ package com.example.projetreservationsejours.controlleur;
 
 import com.example.projetreservationsejours.Application;
 import com.example.projetreservationsejours.modele.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -9,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -33,6 +36,9 @@ public class ShoppingCardDetailsControlleur implements Initializable {
 
     @FXML
     private Button boutonConnexion;
+
+    @FXML
+    private Button changeViewVoyageurMode;
 
     @FXML
     private ImageView home;
@@ -85,6 +91,11 @@ public class ShoppingCardDetailsControlleur implements Initializable {
     @FXML
     private Button boutonValiderPanier;
 
+    @FXML
+    private ChoiceBox viewVoyageurMode;
+
+    ObservableList<String> options = FXCollections.observableArrayList("En cours","Validées");
+
 
 
     @Override
@@ -95,7 +106,13 @@ public class ShoppingCardDetailsControlleur implements Initializable {
         userName.setText(application.userConnected.getUsername());
         AllLocationLoue allLocationLoue = new AllLocationLoue();
         try {
-            allLocationLoue.loadData("location_loue.csv", application.userConnected.getId());
+            viewVoyageurMode.setValue(options.get(0));
+            viewVoyageurMode.setItems(options);
+            if(viewVoyageurMode.getValue().equals(options.get(0))) {
+                allLocationLoue.loadData("location_loue.csv", application.userConnected.getId(), false);
+            } else if (viewVoyageurMode.getValue().equals(options.get(1))) {
+                allLocationLoue.loadData("location_loue.csv", application.userConnected.getId(), true);
+            }
             nbLocation.setText(String.valueOf(allLocationLoue.howManyLocationLoue()));
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -215,6 +232,34 @@ public class ShoppingCardDetailsControlleur implements Initializable {
         bountonInscription.setVisible(!isUserConnected());
     }
 
+    @FXML
+    void search(ActionEvent event) throws IOException {
+        userChoice.getChildren().clear();
+        AllLocationLoue allLocationLoue = new AllLocationLoue();
+        try {
+            if(viewVoyageurMode.getValue().equals(options.get(0))) {
+                allLocationLoue.loadData("location_loue.csv", application.userConnected.getId(), false);
+            } else if (viewVoyageurMode.getValue().equals(options.get(1))) {
+                allLocationLoue.loadData("location_loue.csv", application.userConnected.getId(), true);
+            }
+            nbLocation.setText(String.valueOf(allLocationLoue.howManyLocationLoue()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        for (LocationLoue shoppingCard : allLocationLoue.getLocationList()) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("ShoppingCardTemplate.fxml"));
+                AnchorPane cardNode = loader.load();
+                ShoppingCardTemplateControlleur shoppingCardTemplateControlleur = loader.getController();
+                shoppingCardTemplateControlleur.setUserChoice(shoppingCard);
+                userChoice.getChildren().add(cardNode);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     /**
      * Check if the user is connected
      * @return boolean
@@ -235,5 +280,7 @@ public class ShoppingCardDetailsControlleur implements Initializable {
         boutonConnexion.setStyle("-fx-background-color:#FECEA8; -fx-text-fill: #800020; -fx-border-radius: 30;-fx-background-radius: 30;-fx-border-color: #800020; -fx-arc-width: 30");
         bountonInscription.setStyle("-fx-background-color:#FECEA8; -fx-text-fill: #800020; -fx-border-radius: 30;-fx-background-radius: 30;-fx-border-color: #800020; -fx-arc-width: 30");
         boutonValiderPanier.setStyle("-fx-background-color: #800020; -fx-text-fill:#FFFFFF; -fx-border-radius: 30;-fx-background-radius: 30;-fx-border-color: #FFFFFF; -fx-arc-width: 30");
+        viewVoyageurMode.setStyle("-fx-background-color: #FFFFFF;-fx-font-size: 18px; -fx-font-family: 'Perpetua';");
+        changeViewVoyageurMode.setStyle("-fx-background-color:#FECEA8; -fx-text-fill: #800020; -fx-border-radius: 30;-fx-background-radius: 30;-fx-border-color: #800020; -fx-arc-width: 30");
     }
 }
