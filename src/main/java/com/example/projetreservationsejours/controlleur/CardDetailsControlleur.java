@@ -202,6 +202,9 @@ public class CardDetailsControlleur implements Initializable {
         lieu.setText(location.getLocation());
         nbMaxPersonne.setText(String.valueOf(location.getNumberOfPeople()));
         hote.setText(users.getUsers().get(Integer.parseInt(location.getHost_user_id())-1).getNom());
+        if(location.getHost_user_id().equals(String.valueOf(application.userConnected.getId()))) {
+            boutonAjoutPanier.setVisible(false);
+        }
 
         AllCommentaire commentaireByLocationId = new AllCommentaire();
         try {
