@@ -34,7 +34,21 @@ public class AllLocationLoue {
             String line;
             while ((line = reader.readLine()) != null) {
                 LocationLoue locationLoue = LocationLoue.fromCsv(line);
-                if(locationLoue.getUser_id() == user_id) {
+                if(locationLoue.getUser_id() == user_id && locationLoue.isValide() == false) {
+                    locationLoueList.add(locationLoue);
+                }
+            }
+        }
+    }
+
+    public void loadData(String filename, int user_id, boolean isLoue) throws IOException {
+        String pathRessources = "\\src\\main\\resources\\com\\example\\projetreservationsejours\\ressources\\";
+        Path path = Paths.get(System.getProperty("user.dir")+ pathRessources + filename);
+        try (BufferedReader reader = new BufferedReader(new FileReader(path.toRealPath().toFile()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                LocationLoue locationLoue = LocationLoue.fromCsv(line);
+                if(locationLoue.getUser_id() == user_id && locationLoue.isValide() == isLoue) {
                     locationLoueList.add(locationLoue);
                 }
             }
