@@ -112,6 +112,18 @@ public class ShoppingCardDetailsControlleur implements Initializable {
                 e.printStackTrace();
             }
         }
+
+        shopping_cart.setOnMouseClicked(event -> {
+            application.fenetreControlleur.showNotification("Alerte", "Vous êtes déjà dans la bonne fenêtre", 2000, "warning");
+        });
+
+        user.setOnMouseClicked(event -> {
+            try {
+                application.fenetreControlleur.changerDeFenetre("HostCardDetails.fxml");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     /*public void setUserChoiceCard(Location location) {
