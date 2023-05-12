@@ -4,8 +4,10 @@ import com.example.projetreservationsejours.controlleur.FenetreControlleur;
 import com.example.projetreservationsejours.modele.AllUser;
 import com.example.projetreservationsejours.modele.User;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -25,6 +27,8 @@ public class Application extends javafx.application.Application {
         stage.setTitle("Rezerweethus");
         stage.getIcons().add(new Image(Application.class.getResourceAsStream("images/logo.png")));
         stage.setScene(scene);
+        stage.setResizable(false);
+        stage.setIconified(false);
         stage.show();
         //Initialisation de tout les utilisateurs
         try {

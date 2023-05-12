@@ -6,24 +6,58 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <Pane fx:id="pageConnexionStage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="521.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projetreservationsejours.controlleur.PageConnexionControlleur">
    <children>
-      <Text layoutX="47.0" layoutY="80.0" strokeType="INSIDE" strokeWidth="0.0" text="Nom d'utilisateur :" />
-      <TextField fx:id="nomUtilisateur" layoutX="193.0" layoutY="63.0" prefHeight="16.0" prefWidth="301.0" promptText="Nom d'utilisateur">
+      <Text fill="#800020" layoutX="47.0" layoutY="80.0" strokeType="INSIDE" strokeWidth="0.0" text="Nom d'utilisateur :">
+         <font>
+            <Font name="Perpetua" size="18.0" />
+         </font></Text>
+      <TextField fx:id="nomUtilisateur" layoutX="193.0" layoutY="58.0" prefHeight="16.0" prefWidth="301.0" promptText="Nom d'utilisateur">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor>
+         <font>
+            <Font name="Perpetua" size="18.0" />
+         </font>
       </TextField>
-      <Text fx:id="erreurNomUtilisateur" layoutX="196.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-      <Text layoutX="47.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password :" />
-      <PasswordField fx:id="motDePasse" layoutX="193.0" layoutY="154.0" prefHeight="25.0" prefWidth="301.0" promptText="Mot de passe" />
-      <Text fx:id="erreurPassword" layoutX="193.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-      <CheckBox fx:id="checkboxVoyageur" layoutX="47.0" layoutY="236.0" mnemonicParsing="false" onAction="#checkVoyageur" text="Voyageur" />
-      <CheckBox fx:id="checkboxHote" layoutX="193.0" layoutY="236.0" mnemonicParsing="false" onAction="#checkHote" text="Hôte" />
-      <Text fx:id="erreurCheckbox" layoutX="267.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-      <Button fx:id="boutonConnexion" layoutX="409.0" layoutY="291.0" mnemonicParsing="false" onAction="#verifyInscriptionDetails" text="Se connecter" />
-      <Text fx:id="erreurConnexion" layoutX="47.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text fx:id="erreurNomUtilisateur" fill="#ff7272" layoutX="193.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0">
+         <font>
+            <Font name="Perpetua" size="14.0" />
+         </font></Text>
+      <Text fill="#800020" layoutX="47.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password :">
+         <font>
+            <Font name="Perpetua" size="18.0" />
+         </font></Text>
+      <PasswordField fx:id="motDePasse" layoutX="193.0" layoutY="149.0" prefHeight="25.0" prefWidth="301.0" promptText="Mot de passe">
+         <font>
+            <Font name="Perpetua" size="18.0" />
+         </font></PasswordField>
+      <Text fx:id="erreurPassword" fill="#ff7272" layoutX="193.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0">
+         <font>
+            <Font name="Perpetua" size="14.0" />
+         </font></Text>
+      <CheckBox fx:id="checkboxVoyageur" layoutX="47.0" layoutY="236.0" mnemonicParsing="false" onAction="#checkVoyageur" stylesheets="@../CSS/Test.css" text="Voyageur" textFill="#800020">
+         <font>
+            <Font name="Perpetua" size="18.0" />
+         </font></CheckBox>
+      <CheckBox fx:id="checkboxHote" layoutX="193.0" layoutY="236.0" mnemonicParsing="false" onAction="#checkHote" stylesheets="@../CSS/Test.css" text="Hôte" textFill="#800020">
+         <font>
+            <Font name="Perpetua" size="18.0" />
+         </font></CheckBox>
+      <Text fx:id="erreurCheckbox" fill="#ff7272" layoutX="281.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0">
+         <font>
+            <Font name="Perpetua" size="14.0" />
+         </font></Text>
+      <Button fx:id="boutonConnexion" layoutX="366.0" layoutY="285.0" mnemonicParsing="false" onAction="#verifyInscriptionDetails" prefHeight="53.0" prefWidth="128.0" text="Se connecter">
+         <font>
+            <Font name="Perpetua" size="18.0" />
+         </font></Button>
+      <Text fx:id="erreurConnexion" fill="#ff7272" layoutX="47.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0">
+         <font>
+            <Font name="Perpetua" size="14.0" />
+         </font></Text>
    </children>
 </Pane>

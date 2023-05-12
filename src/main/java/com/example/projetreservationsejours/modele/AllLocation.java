@@ -28,15 +28,33 @@ public class AllLocation {
         }
     }
 
-    public void loadData(String filename, String country) throws IOException {
+    public void loadDataAvailable(String filename, boolean available) throws IOException {
+        available = true;
         String pathRessources = "\\src\\main\\resources\\com\\example\\projetreservationsejours\\ressources\\";
         Path path = Paths.get(System.getProperty("user.dir")+ pathRessources + filename);
         try (BufferedReader reader = new BufferedReader(new FileReader(path.toRealPath().toFile()))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 Location location = Location.fromCsv(line);
+                if(!location.isLocation_loue()) {
+                    locationList.add(location);
+                }
+            }
+        }
+    }
+
+    public void loadData(String filename, String country) throws IOException {
+        String pathRessources = "\\src\\main\\resources\\com\\example\\projetreservationsejours\\ressources\\";
+        Path path = Paths.get(System.getProperty("user.dir")+ pathRessources + filename);
+        String regex = "^.*" + country + ".*$";
+        try (BufferedReader reader = new BufferedReader(new FileReader(path.toRealPath().toFile()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                Location location = Location.fromCsv(line);
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                if(location.getLocation().equals(country)) {
+                if(location.getLocation().matches(regex) || location.getStartDate().format(formatter).matches(regex) || location.getEndDate().format(formatter).matches(regex)
+                || location.getHost_user_id().matches(regex) || String.valueOf(location.getNumberOfPeople()).matches(regex)
+                || location.getTitle().matches(regex) || String.valueOf(location.getPrice()).matches(regex)) {
                     locationList.add(location);
                 }
             }
@@ -46,12 +64,15 @@ public class AllLocation {
     public void loadData(String filename, String country, String dateDebut, String dateFin) throws IOException {
         String pathRessources = "\\src\\main\\resources\\com\\example\\projetreservationsejours\\ressources\\";
         Path path = Paths.get(System.getProperty("user.dir")+ pathRessources + filename);
+        String regex = "^.*" + country + ".*$";
+        String regexDebut = "^.*" + dateDebut + ".*$";
+        String regexFin = "^.*" + dateFin + ".*$";
         try (BufferedReader reader = new BufferedReader(new FileReader(path.toRealPath().toFile()))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 Location location = Location.fromCsv(line);
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                if(location.getLocation().equals(country) && location.getStartDate().format(formatter).equals(dateDebut) && location.getEndDate().format(formatter).equals(dateFin)) {
+                if(location.getLocation().matches(regex) && location.getStartDate().format(formatter).matches(regexDebut) && location.getEndDate().format(formatter).matches(regexFin)) {
                     locationList.add(location);
                 }
             }

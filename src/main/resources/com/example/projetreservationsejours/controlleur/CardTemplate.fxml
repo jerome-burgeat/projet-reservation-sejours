@@ -5,17 +5,24 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="251.0" prefWidth="271.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projetreservationsejours.controlleur.CardTemplateControlleur">
+<AnchorPane fx:id="anchorPane" prefHeight="251.0" prefWidth="271.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projetreservationsejours.controlleur.CardTemplateControlleur">
    <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" layoutX="47.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@../images/default-image.png" />
       </image>
    </ImageView>
-   <Pane layoutX="26.0" layoutY="144.0" prefHeight="46.0" prefWidth="212.0">
+   <Pane layoutX="10.0" layoutY="150.0" prefHeight="71.0" prefWidth="212.0">
       <children>
-            <Label fx:id="titre" prefHeight="17.0" prefWidth="212.0" text="Title:" />
-            <Label fx:id="prix" layoutX="87.0" layoutY="24.0" prefWidth="125.0" text="Prix" />
+            <Label fx:id="titre" prefHeight="17.0" prefWidth="212.0" text="Title:">
+            <font>
+               <Font name="Perpetua" size="18.0" />
+            </font></Label>
+            <Label fx:id="prix" layoutX="87.0" layoutY="24.0" prefWidth="125.0" text="Prix">
+            <font>
+               <Font name="Perpetua" size="14.0" />
+            </font></Label>
       </children>
    </Pane>
 

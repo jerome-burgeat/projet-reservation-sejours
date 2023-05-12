@@ -79,11 +79,6 @@ public class PageInscriptionControlleur extends Preloader implements Initializab
 
     private User user = new User();
 
-    public void setButton(Button button) {
-            button.setBackground(new Background(new BackgroundFill(Color.WHEAT, null, null)));
-            button.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-    }
-
     @FXML
     void checkHote(ActionEvent event) {
 
@@ -166,7 +161,7 @@ public class PageInscriptionControlleur extends Preloader implements Initializab
             user.setHote(checkboxHote.isSelected());
             application.allUsers.addNewUserToCsv("utilisateurs.csv",user);
             application.allUsers.loadData("utilisateurs.csv");
-            application.fenetreControlleur.showNotification("Connexion","Votre inscription a été validé",2000,"images/Right.png");
+            application.fenetreControlleur.showNotification("Connexion","Votre inscription a été validé",2000,"success");
             application.userConnected = application.allUsers.findUserByUsernameAndPassword(user.getUsername(),user.getPassword());
             application.fenetreControlleur.changerDeFenetre("Accueil.fxml");
             System.out.println("Inscription" + application.userConnected.toString());
@@ -183,6 +178,12 @@ public class PageInscriptionControlleur extends Preloader implements Initializab
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        prenom.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: #D3D3D3");
+        nom.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: #D3D3D3");
+        nomUtilisateur.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: #D3D3D3");
+        email.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: #D3D3D3");
+        motDePasse.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: #D3D3D3");
+        pageInscriptionStage.setStyle("-fx-background-color: #FFFFFF;");
+        boutonInscrire.setStyle("-fx-background-color: #800020; -fx-text-fill:#FFFFFF; -fx-border-radius: 30;-fx-background-radius: 30;-fx-border-color: #FFFFFF; -fx-arc-width: 30");
     }
 }

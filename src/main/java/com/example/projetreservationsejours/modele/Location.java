@@ -11,7 +11,8 @@ public class Location {
     private String location;
     private String title;
     private int numberOfPeople;
-    private String host;
+    private String host_user_id;
+    private boolean location_loue;
     private String urlPhoto;
 
     // getters and setters omitted for brevity
@@ -27,8 +28,9 @@ public class Location {
         location.setLocation(tokens[4]);
         location.setTitle(tokens[5]);
         location.setNumberOfPeople(Integer.parseInt(tokens[6]));
-        location.setHost(tokens[7]);
-        location.setUrlPhoto(tokens[8]);
+        location.setHost_user_id(tokens[7]);
+        location.setLocation_loue(Integer.parseInt(tokens[8]) == 1);
+        location.setUrlPhoto(tokens[9]);
         return location;
     }
 
@@ -84,13 +86,17 @@ public class Location {
         this.numberOfPeople = numberOfPeople;
     }
 
-    public String getHost() {
-        return host;
+    public String getHost_user_id() {
+        return host_user_id;
     }
 
-    public void setHost(String host) {
-        this.host = host;
+    public void setHost_user_id(String host_user_id) {
+        this.host_user_id = host_user_id;
     }
+
+    public boolean isLocation_loue() { return location_loue; }
+
+    public void setLocation_loue(boolean location_loue) { this.location_loue = location_loue; }
 
     public String getUrlPhoto() { return urlPhoto; }
 
@@ -102,10 +108,11 @@ public class Location {
                 "startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", price=" + price +
-                ", location='" + location +
-                ", title='" + title +
+                ", location=" + location +
+                ", title=" + title +
                 ", numberOfPeople=" + numberOfPeople +
-                ", host='" + host +
+                ", host=" + host_user_id +
+                ", isLocationLoue=" + location_loue +
                 ", urlPhoto='" + urlPhoto +
                 '}';
     }
