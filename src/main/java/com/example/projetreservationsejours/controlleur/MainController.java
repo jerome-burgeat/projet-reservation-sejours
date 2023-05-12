@@ -100,6 +100,11 @@ public class MainController implements Initializable {
 
     ObservableList<String> options = FXCollections.observableArrayList("Toutes les demandes","Mes locations");
 
+    ImageCache imageCache = new ImageCache();
+
+    private ScheduledFuture<?> dataLoadingTask;
+
+    AllLocation allLocation;
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 
@@ -123,7 +128,7 @@ public class MainController implements Initializable {
         viewMode.setStyle("-fx-background-color: #FFFFFF;-fx-font-size: 18px; -fx-font-family: 'Perpetua';");
         searchTextField.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: #D3D3D3");
         // Initialisation des locations
-        AllLocation allLocation = new AllLocation();
+        allLocation = new AllLocation();
         try {
             allLocation.loadDataAvailable("locations.csv", true);
             viewMode.setValue(options.get(0));
@@ -133,74 +138,19 @@ public class MainController implements Initializable {
         }
 
         searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue.length() >= 2) {
+            if (newValue.length() >= 2) {
                 allLocation.getLocationList().clear();
-                try {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                    if(dateDebut.getValue() == null) {
-                        allLocation.loadData("locations.csv", newValue);
-                    }
-                    else {
-                        allLocation.loadData("locations.csv", newValue, dateDebut.getValue().format(formatter), dateFin.getValue().format(formatter));
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                //allLocation.displayLocationList();
 
-                if(this.isUserConnected()) {
-                    userName.setText(application.userConnected.getUsername());
+                // Cancel previous data loading task if it exists
+                if (dataLoadingTask != null && !dataLoadingTask.isDone()) {
+                    dataLoadingTask.cancel(true);
                 }
 
-        /*if (viewMode.getValue().equals(options.get(1))) {
-            for (int i=0; i < allLocation.getLocationList().size(); i++) {
-                if(Integer.parseInt(allLocation.getLocationList().get(i).getHost_user_id()) != this.application.userConnected.getId()) {
-                    allLocation.getLocationList().remove(i);
-                }
-            }
-        }*/
-                //nbLocation.setText(String.valueOf(allLocationEnValidation.howManyLocationLoue()));
-
-                cardContainer.getChildren().clear();
-                if (allLocation.getLocationList().isEmpty()) {
-                    HBox hBox = new HBox();
-                    hBox.setAlignment(Pos.BASELINE_CENTER);
-                    hBox.getChildren().add(new Text("La recherche n'a pas aboutie"));
-                    cardContainer.getChildren().add(hBox);
-                }
-                else {
-                    if(searchTextField.getText().equals("")) {
-                        try {
-                            allLocation.getLocationList().clear();
-                            allLocation.loadData("locations.csv");
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-
-                        if (this.isUserConnected()) {
-                            userName.setText(application.userConnected.getUsername());
-                            AllLocationLoue allLocationLoue = new AllLocationLoue();
-                            try {
-                                allLocationLoue.loadData("location_loue.csv", application.userConnected.getId());
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                            nbLocation.setText(String.valueOf(allLocationLoue.howManyLocationLoue()));
-                        }
-                    }
-                    if (viewMode.getValue().equals(options.get(1))) {
-                        for(int i=0; i < allLocation.getLocationList().size(); i++) {
-                            if(!allLocation.getLocationList().get(i).getHost_user_id().equals(String.valueOf(this.application.userConnected.getId()))) {
-                                allLocation.getLocationList().remove(i);
-                                i--;
-                            }
-                        }
-                    }
-                    allLocation.displayLocationList();
-                    displayAllLocation(allLocation);
-                }
+                // Schedule a new data loading task with a delay
+                dataLoadingTask = scheduleDataLoadingTask(newValue);
             }
         });
+
 
         if(this.isUserConnected()) {
             userName.setText(application.userConnected.getUsername());
@@ -236,6 +186,67 @@ public class MainController implements Initializable {
         displayAllLocation(allLocation);
     }
 
+    private ScheduledFuture<?> scheduleDataLoadingTask(String searchQuery) {
+        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+        return executorService.schedule(() -> {
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                if (dateDebut.getValue() == null) {
+                    allLocation.loadData("locations.csv", searchQuery);
+                } else {
+                    allLocation.loadData("locations.csv", searchQuery, dateDebut.getValue().format(formatter), dateFin.getValue().format(formatter));
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            Platform.runLater(() -> {
+                // Update UI with the loaded data
+                if (this.isUserConnected()) {
+                    userName.setText(application.userConnected.getUsername());
+                }
+
+                cardContainer.getChildren().clear();
+                if (allLocation.getLocationList().isEmpty()) {
+                    HBox hBox = new HBox();
+                    hBox.setAlignment(Pos.BASELINE_CENTER);
+                    hBox.getChildren().add(new Text("La recherche n'a pas aboutie"));
+                    cardContainer.getChildren().add(hBox);
+                } else {
+                    if (searchTextField.getText().equals("")) {
+                        try {
+                            allLocation.getLocationList().clear();
+                            allLocation.loadData("locations.csv");
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                        if (this.isUserConnected()) {
+                            userName.setText(application.userConnected.getUsername());
+                            AllLocationLoue allLocationLoue = new AllLocationLoue();
+                            try {
+                                allLocationLoue.loadData("location_loue.csv", application.userConnected.getId());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            nbLocation.setText(String.valueOf(allLocationLoue.howManyLocationLoue()));
+                        }
+                    }
+                    if (viewMode.getValue().equals(options.get(1))) {
+                        for (int i = 0; i < allLocation.getLocationList().size(); i++) {
+                            if (!allLocation.getLocationList().get(i).getHost_user_id().equals(String.valueOf(this.application.userConnected.getId()))) {
+                                allLocation.getLocationList().remove(i);
+                                i--;
+                            }
+                        }
+                    }
+                    allLocation.displayLocationList();
+                    displayAllLocation(allLocation);
+                }
+            });
+        }, 500, TimeUnit.MILLISECONDS); // Delay of 500 milliseconds before loading the data
+    }
+
 
     /**
      * For all the locations available:
@@ -246,66 +257,16 @@ public class MainController implements Initializable {
      * */
     @FXML
     void searchBar(ActionEvent event) throws IOException {
-        AllLocation allLocation = new AllLocation();
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            if(dateDebut.getValue() == null) {
-                allLocation.loadData("locations.csv", searchTextField.getText());
-            }
-            else {
-                allLocation.loadData("locations.csv", searchTextField.getText(), dateDebut.getValue().format(formatter), dateFin.getValue().format(formatter));
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        //allLocation.displayLocationList();
+        if (searchTextField.getText() != null) {
+            allLocation.getLocationList().clear();
 
-        if(this.isUserConnected()) {
-            userName.setText(application.userConnected.getUsername());
-        }
-
-        /*if (viewMode.getValue().equals(options.get(1))) {
-            for (int i=0; i < allLocation.getLocationList().size(); i++) {
-                if(Integer.parseInt(allLocation.getLocationList().get(i).getHost_user_id()) != this.application.userConnected.getId()) {
-                    allLocation.getLocationList().remove(i);
-                }
+            // Cancel previous data loading task if it exists
+            if (dataLoadingTask != null && !dataLoadingTask.isDone()) {
+                dataLoadingTask.cancel(true);
             }
-        }*/
-        //nbLocation.setText(String.valueOf(allLocationEnValidation.howManyLocationLoue()));
 
-        cardContainer.getChildren().clear();
-        if (allLocation.getLocationList().isEmpty()) {
-            HBox hBox = new HBox();
-            hBox.setAlignment(Pos.BASELINE_CENTER);
-            hBox.getChildren().add(new Text("La recherche n'a pas aboutie"));
-            cardContainer.getChildren().add(hBox);
-        }
-        else {
-            if(searchTextField.getText().equals("")) {
-                try {
-                    allLocation.getLocationList().clear();
-                    allLocation.loadData("locations.csv");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
-                if (this.isUserConnected()) {
-                    userName.setText(application.userConnected.getUsername());
-                    AllLocationLoue allLocationLoue = new AllLocationLoue();
-                    allLocationLoue.loadData("location_loue.csv", application.userConnected.getId());
-                    nbLocation.setText(String.valueOf(allLocationLoue.howManyLocationLoue()));
-                }
-            }
-           if (viewMode.getValue().equals(options.get(1))) {
-                for(int i=0; i < allLocation.getLocationList().size(); i++) {
-                    if(!allLocation.getLocationList().get(i).getHost_user_id().equals(String.valueOf(this.application.userConnected.getId()))) {
-                        allLocation.getLocationList().remove(i);
-                        i--;
-                    }
-                }
-            }
-            allLocation.displayLocationList();
-            displayAllLocation(allLocation);
+            // Schedule a new data loading task with a delay
+            dataLoadingTask = scheduleDataLoadingTask(searchTextField.getText());
         }
     }
 
@@ -369,7 +330,6 @@ public class MainController implements Initializable {
     public boolean isUserConnected() { return application.userConnected != null; }
 
     private void displayAllLocation(AllLocation allLocation) {
-        ImageCache imageCache = new ImageCache();
         final int numberOfCardsPerRow = 5;
         ExecutorService executor = Executors.newFixedThreadPool(numberOfCardsPerRow);
 
@@ -421,7 +381,7 @@ public class MainController implements Initializable {
 
         future.whenComplete((__, throwable) -> executor.shutdown());
         try {
-            future.get(3, TimeUnit.SECONDS);
+            future.get(0, TimeUnit.SECONDS);
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             e.printStackTrace();
         }
