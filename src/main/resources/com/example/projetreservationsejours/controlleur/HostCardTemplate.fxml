@@ -85,7 +85,7 @@
                <Image url="@../images/wrong-red.png" />
             </image>
          </ImageView>
-         <ImageView fx:id="approuve" fitHeight="28.0" fitWidth="28.0" layoutX="731.0" layoutY="22.0" onMouseClicked="#eraseChoice" pickOnBounds="true" preserveRatio="true">
+         <ImageView fx:id="approuve" fitHeight="28.0" fitWidth="28.0" layoutX="738.0" layoutY="24.0" onMouseClicked="#eraseChoice" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@../images/right-green.png" />
             </image>
