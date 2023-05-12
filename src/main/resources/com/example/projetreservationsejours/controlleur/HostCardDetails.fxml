@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.FlowPane?>
@@ -15,11 +12,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="mainPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1536.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projetreservationsejours.controlleur.MainController">
+<Pane fx:id="mainPane" prefHeight="790.0" prefWidth="1536.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projetreservationsejours.controlleur.HostCardDetailsControlleur">
    <children>
       <VBox fx:id="vboxPane" prefHeight="790.0" prefWidth="1536.0">
          <children>
-            <HBox prefHeight="150.0" prefWidth="200.0">
+            <HBox fx:id="hboxPane" prefHeight="150.0" prefWidth="200.0">
                <children>
                   <Pane fx:id="headerPane" prefHeight="150.0" prefWidth="1536.0">
                      <children>
@@ -33,73 +30,57 @@
                            </font></Button>
                         <ImageView fitHeight="300.0" fitWidth="250.0" layoutX="646.0" layoutY="-29.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@images/logo.png" />
+                              <Image url="@../images/logo.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="logout" fitHeight="35.0" fitWidth="30.0" layoutX="1489.0" layoutY="44.0" onMouseClicked="#logout" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@images/logout.png" />
+                              <Image url="@../images/logout.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="user" fitHeight="35.0" fitWidth="35.0" layoutX="1331.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@images/user.png" />
+                              <Image url="@../images/user.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="shopping_cart" fitHeight="35.0" fitWidth="35.0" layoutX="1266.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@images/shopping_basket.png" />
+                              <Image url="@../images/shopping_basket.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="home" fitHeight="35.0" fitWidth="35.0" layoutX="1205.0" layoutY="42.0" onMouseClicked="#backHome" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="home" fitHeight="35.0" fitWidth="35.0" layoutX="1206.0" layoutY="42.0" onMouseClicked="#backHome" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@images/home.png" />
+                              <Image url="@../images/home.png" />
                            </image>
                         </ImageView>
-                        <Text fx:id="userName" fill="WHITE" layoutX="1366.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="elodie13" wrappingWidth="128.00000000000023">
+                        <Text fx:id="userName" fill="WHITE" layoutX="1366.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="128.00000000000023">
                            <font>
                               <Font name="Perpetua" size="18.0" />
                            </font></Text>
                         <Text fx:id="nbLocation" fill="WHITE" layoutX="1300.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="16.9921875">
                            <font>
                               <Font name="Perpetua" size="18.0" />
-                           </font>
-                        </Text>
+                           </font></Text>
                      </children>
                   </Pane>
                </children>
             </HBox>
-            <ScrollPane fx:id="scrollPane" prefHeight="750.0" prefWidth="1525.0">
+            <ScrollPane fx:id="scrollPane" prefHeight="750.0" prefWidth="1526.0">
                <content>
-                  <FlowPane fx:id="flowPane" minHeight="-Infinity" prefWidth="1523.0">
+                  <FlowPane fx:id="flowPane" prefWidth="1523.0">
                      <children>
-                        <HBox fx:id="hboxPane" prefHeight="170.0" prefWidth="1536.0">
+                        <HBox fx:id="hboxPane2" prefHeight="123.0" prefWidth="1536.0">
                            <children>
-                              <Pane fx:id="researchPane" prefHeight="119.0" prefWidth="1520.0">
+                              <VBox fx:id="userChoice1" prefWidth="350.0" />
+                              <VBox fx:id="userChoice" prefWidth="1000.0" />
+                              <Pane fx:id="pane" prefHeight="40.0" prefWidth="239.0">
                                  <children>
-                                    <TextField fx:id="searchTextField" layoutX="184.0" layoutY="42.0" prefHeight="40.0" prefWidth="233.0" promptText="Recherche" style="-fx-background-image: url('https://cdn-icons-png.flaticon.com/512/5219/5219383.png'); -fx-background-repeat: no-repeat; -fx-background-position: right center; -fx-background-size: 20px 20px;">
-                                       <font>
-                                          <Font name="Perpetua" size="18.0" />
-                                       </font></TextField>
-                                    <DatePicker fx:id="dateDebut" layoutX="522.0" layoutY="42.0" prefHeight="40.0" prefWidth="233.0" promptText="Arrivée" stylesheets="@CSS/Test.css" />
-                                    <DatePicker fx:id="dateFin" layoutX="891.0" layoutY="42.0" prefHeight="40.0" prefWidth="233.0" promptText="Départ" stylesheets="@CSS/Test.css" />
-                                    <ChoiceBox fx:id="viewMode" layoutX="1241.0" layoutY="42.0" prefHeight="40.0" prefWidth="206.0" stylesheets="@CSS/Test.css" />
-                                    <Button fx:id="boutonRecherche" layoutX="709.0" layoutY="107.0" mnemonicParsing="false" onAction="#searchBar" prefHeight="53.0" prefWidth="128.0" text="Rechercher">
-                                       <font>
-                                          <Font name="Perpetua" size="18.0" />
-                                       </font></Button>
+                                    <ChoiceBox fx:id="viewHostMode" prefHeight="40.0" prefWidth="206.0" stylesheets="@../CSS/Test.css" />
+                                    <Button fx:id="changeViewHostMode" layoutX="39.0" layoutY="56.0" mnemonicParsing="false" onAction="#search" prefHeight="53.0" prefWidth="128.0" stylesheets="@../CSS/Test.css" text="Changer la vue" />
                                  </children>
                               </Pane>
                            </children>
                         </HBox>
-                        <VBox fx:id="container" alignment="CENTER" prefWidth="1520.0" spacing="20.0">
-                           <padding>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                           </padding>
-                           <children>
-                              <VBox fx:id="cardContainer" prefHeight="50.0" />
-                           </children>
-                        </VBox>
                      </children>
                   </FlowPane>
                </content>
