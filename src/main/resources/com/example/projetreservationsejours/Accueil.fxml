@@ -77,7 +77,7 @@
                            <children>
                               <Pane fx:id="researchPane" prefHeight="119.0" prefWidth="1520.0">
                                  <children>
-                                    <TextField fx:id="searchTextField" layoutX="184.0" layoutY="42.0" prefHeight="40.0" prefWidth="233.0" promptText="Destination" style="-fx-background-image: url('https://cdn-icons-png.flaticon.com/512/5219/5219383.png'); -fx-background-repeat: no-repeat; -fx-background-position: right center; -fx-background-size: 20px 20px;">
+                                    <TextField fx:id="searchTextField" layoutX="184.0" layoutY="42.0" prefHeight="40.0" prefWidth="233.0" promptText="Recherche" style="-fx-background-image: url('https://cdn-icons-png.flaticon.com/512/5219/5219383.png'); -fx-background-repeat: no-repeat; -fx-background-position: right center; -fx-background-size: 20px 20px;">
                                        <font>
                                           <Font name="Perpetua" size="18.0" />
                                        </font></TextField>
