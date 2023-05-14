@@ -2,10 +2,12 @@ package com.example.projetreservationsejours.controlleur;
 
 import com.example.projetreservationsejours.Application;
 import com.example.projetreservationsejours.modele.*;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -57,7 +59,14 @@ public class HostCardTemplateControlleur {
     @FXML
     private Pane pane;
 
-    public void setUserChoice(LocationEnValidation locationEnValidation) throws IOException {
+    public void setUserChoice(LocationEnValidation locationEnValidation, ChoiceBox viewHostMode, ObservableList<String> options) throws IOException {
+        if(viewHostMode.getValue().equals(options.get(0))) {
+            approuve.setVisible(true);
+            delete.setVisible(true);
+        } else if (viewHostMode.getValue().equals(options.get(1))) {
+            approuve.setVisible(false);
+            delete.setVisible(false);
+        }
         AllLocation allLocation = new AllLocation();
         allLocation.loadData("locations.csv");
 
