@@ -111,7 +111,7 @@ public class HostCardDetailsControlleur implements Initializable {
             viewHostMode.setValue(options.get(0));
             viewHostMode.setItems(options);
             if(viewHostMode.getValue().equals(options.get(0))) {
-                allLocationEnValidation.loadData("location_en_validation.csv", application.userConnected.getId());
+                allLocationEnValidation.loadData("location_en_validation.csv", application.userConnected.getId(),false);
             } else if (viewHostMode.getValue().equals(options.get(1))) {
                 allLocationEnValidation.loadData("location_en_validation.csv", application.userConnected.getId(), true);
             }
@@ -126,7 +126,7 @@ public class HostCardDetailsControlleur implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("HostCardTemplate.fxml"));
                 AnchorPane cardNode = loader.load();
                 HostCardTemplateControlleur hostCardTemplateControlleur = loader.getController();
-                hostCardTemplateControlleur.setUserChoice(hostCard);
+                hostCardTemplateControlleur.setUserChoice(hostCard,viewHostMode,options);
                 userChoice.getChildren().add(cardNode);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -225,7 +225,7 @@ public class HostCardDetailsControlleur implements Initializable {
         AllLocationEnValidation allLocationEnValidation = new AllLocationEnValidation();
         try {
             if(viewHostMode.getValue().equals(options.get(0))) {
-                allLocationEnValidation.loadData("location_en_validation.csv", application.userConnected.getId());
+                allLocationEnValidation.loadData("location_en_validation.csv", application.userConnected.getId(),false);
             } else if (viewHostMode.getValue().equals(options.get(1))) {
                 allLocationEnValidation.loadData("location_en_validation.csv", application.userConnected.getId(), true);
             }
@@ -239,7 +239,7 @@ public class HostCardDetailsControlleur implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("HostCardTemplate.fxml"));
                 AnchorPane cardNode = loader.load();
                 HostCardTemplateControlleur hostCardTemplateControlleur = loader.getController();
-                hostCardTemplateControlleur.setUserChoice(hostCard);
+                hostCardTemplateControlleur.setUserChoice(hostCard,viewHostMode,options);
                 userChoice.getChildren().add(cardNode);
             } catch (IOException e) {
                 e.printStackTrace();
